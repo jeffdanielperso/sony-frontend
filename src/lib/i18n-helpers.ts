@@ -1,6 +1,5 @@
 import type { StrapiLocalization, Locale } from "@/types/strapi";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+import { SITE_URL } from "@/lib/constants";
 
 export function getAlternateSlug(
   localizations: StrapiLocalization[] | undefined,

@@ -33,6 +33,8 @@ export async function generateMetadata({
       : {}),
     ...(seo?.metaRobots ? { robots: seo.metaRobots } : {}),
     openGraph: {
+      type: "website",
+      locale: lang,
       title: fbMeta?.title ?? seo?.metaTitle ?? homepage.Hero_Title,
       description:
         fbMeta?.description?.slice(0, 65) ??

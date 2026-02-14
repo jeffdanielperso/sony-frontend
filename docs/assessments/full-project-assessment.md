@@ -15,8 +15,8 @@ All P0 items resolved in Phase 1 (2026-02-14):
 
 | # | Issue | Domain | Status |
 |---|-------|--------|--------|
-| 1 | **No `sitemap.ts` or `robots.txt`** — Search engines can't discover pages | SEO | Phase 2 |
-| 2 | **No JSON-LD structured data** — Zero rich snippets (Course, Service, LocalBusiness) | SEO | Phase 2 |
+| 1 | ~~**No `sitemap.ts` or `robots.txt`**~~ — Added dynamic `sitemap.ts` and `robots.ts` | SEO | Fixed |
+| 2 | ~~**No JSON-LD structured data**~~ — Added Course (activities), Service+Offer (services), LocalBusiness (home) | SEO | Fixed |
 | 3 | ~~**No `not-found.tsx`**~~ — Added `src/app/[lang]/not-found.tsx` | Frontend + UI/UX | Fixed |
 | 4 | ~~**No `error.tsx`**~~ — Added `src/app/[lang]/error.tsx` with retry | Frontend + UI/UX | Fixed |
 | 5 | ~~**No `loading.tsx`**~~ — Added `src/app/[lang]/loading.tsx` with spinner | Frontend + UI/UX | Fixed |
@@ -38,9 +38,9 @@ Additional fixes in Phase 1:
 
 | # | Issue | Domain | Effort |
 |---|-------|--------|--------|
-| 11 | **No OpenGraph locale, type, or Twitter Cards** — Poor social sharing | SEO | Medium |
-| 12 | **Detail page canonical/hreflang URLs are relative** — Should be absolute | SEO + Frontend | Small |
-| 13 | **Home page has no title or description in `generateMetadata`** | SEO | Trivial |
+| 11 | ~~**No OpenGraph locale, type, or Twitter Cards**~~ — Added og:type, og:locale on all pages; Twitter cards from metaSocial | SEO | Fixed |
+| 12 | ~~**Detail page canonical/hreflang URLs are relative**~~ — Now absolute via `SITE_URL` constant | SEO + Frontend | Fixed |
+| 13 | ~~**Home page has no title or description in `generateMetadata`**~~ — Wired from Strapi SEO | SEO | Fixed |
 | 14 | **No Dockerfile or docker-compose** — Can't containerize | DevOps | Medium |
 | 15 | **No CI/CD pipeline** (GitHub Actions) | DevOps | Medium |
 | 16 | **No security headers** (CSP, HSTS, X-Frame-Options, etc.) | DevOps | Medium |
@@ -60,14 +60,14 @@ Additional fixes in Phase 1:
 | 23 | **No shared `Dictionary` type** — Components define inline dict shapes | Frontend | Small |
 | 24 | **Duplicated intensity dots + hero image patterns** — Extract components | Frontend + UI/UX | Small |
 | 25 | **BrandLogo downloads both light+dark images** — Double network request | Frontend | Small |
-| 26 | **Activity detail ignores `seo?.metaImage` fallback** | SEO | Trivial |
-| 27 | **No `seo?.canonicalUrl` override or `metaRobots` support** | SEO | Small |
+| 26 | ~~**Activity detail ignores `seo?.metaImage` fallback**~~ — Fixed, now uses `seo?.metaImage?.url ?? Image?.url` | SEO | Fixed |
+| 27 | ~~**No `seo?.canonicalUrl` override or `metaRobots` support**~~ — Both wired into generateMetadata | SEO | Fixed |
 | 28 | **Emoji service type icons** — Inconsistent rendering across platforms | UI/UX | Small |
 | 29 | **External links on Links page lack "opens in new tab" indication** | UI/UX | Trivial |
 | 30 | **No error tracking** (Sentry or similar) | DevOps | Medium |
 | 31 | **No health check API endpoint** | DevOps | Small |
 | 32 | **Pre-commit hooks** (husky + lint-staged) | DevOps | Small |
-| 33 | **`NEXT_PUBLIC_SITE_URL` defaults to empty string** — Breaks absolute URLs | Frontend + SEO | Trivial |
+| 33 | ~~**`NEXT_PUBLIC_SITE_URL` defaults to empty string**~~ — Centralized in `src/lib/constants.ts`, defaults to production domain | Frontend + SEO | Fixed |
 | 34 | **Locale constants duplicated** in middleware and i18n/config | Frontend | Trivial |
 
 ---
@@ -96,9 +96,9 @@ Additional fixes in Phase 1:
 
 Lockfile, `.env.example`, standalone output, production image patterns, locale validation, contrast fix, `not-found.tsx`, `error.tsx`, `loading.tsx`.
 
-### Phase 2 — SEO (P0-P1 SEO)
+### Phase 2 — SEO (P0-P1 SEO) — COMPLETED 2026-02-14
 
-`sitemap.ts`, `robots.ts`, JSON-LD structured data, OpenGraph/Twitter cards, absolute canonical/hreflang URLs, home page metadata.
+`sitemap.ts`, `robots.ts`, JSON-LD structured data (Course, Service+Offer, LocalBusiness), OpenGraph type/locale on all pages, Twitter cards from metaSocial, absolute canonical/hreflang URLs, all Strapi SEO fields wired (keywords, metaRobots, canonicalUrl, metaSocial), `SITE_URL` centralized in `src/lib/constants.ts`.
 
 ### Phase 3 — Accessibility (P1 a11y)
 

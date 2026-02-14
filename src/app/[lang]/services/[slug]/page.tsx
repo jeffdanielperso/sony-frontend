@@ -6,6 +6,7 @@ import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getServiceBySlug, getAllServiceSlugs, getStrapiMedia } from "@/lib/strapi";
 import { getAlternateSlug } from "@/lib/i18n-helpers";
+import { SITE_URL } from "@/lib/constants";
 import { AlternateUrlSetter } from "@/components/AlternateUrlContext";
 import { BundleCard } from "@/components/BundleCard";
 import { MoonDivider } from "@/components/MoonDivider";
@@ -41,8 +42,8 @@ export async function generateMetadata({
 
   const targetLang = lang === "en" ? "fr" : "en";
   const altSlug = getAlternateSlug(service.localizations, lang);
-  const currentUrl = `/${lang}/services/${slug}`;
-  const altUrl = altSlug ? `/${targetLang}/services/${altSlug}` : null;
+  const currentUrl = `${SITE_URL}/${lang}/services/${slug}`;
+  const altUrl = altSlug ? `${SITE_URL}/${targetLang}/services/${altSlug}` : null;
 
   const twitterMeta = seo?.metaSocial?.find((s) => s.socialNetwork === "Twitter");
 
@@ -53,11 +54,14 @@ export async function generateMetadata({
       ? { keywords: seo.keywords.split(",").map((k) => k.trim()) }
       : {}),
     ...(seo?.metaRobots ? { robots: seo.metaRobots } : {}),
-    openGraph: imageUrl
-      ? {
-          images: [{ url: imageUrl }],
-        }
-      : undefined,
+    openGraph: {
+      type: "article",
+      locale: lang,
+      title: seo?.metaTitle ?? service.Title,
+      description: (seo?.metaDescription ?? service.Description)?.slice(0, 65),
+      url: currentUrl,
+      ...(imageUrl ? { images: [{ url: imageUrl }] } : {}),
+    },
     ...(twitterMeta
       ? {
           twitter: {
@@ -208,6 +212,34 @@ export default async function ServiceDetailPage({
           </div>
         </section>
       )}
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: service.Title,
+            description: service.seo?.metaDescription ?? service.Description?.slice(0, 160),
+            url: `${SITE_URL}/${lang}/services/${slug}`,
+            ...(heroImage ? { image: heroImage } : {}),
+            provider: {
+              "@type": "LocalBusiness",
+              name: "Sony Yoga",
+              url: SITE_URL,
+            },
+            serviceType: service.Service_Type,
+            ...(service.Location ? { areaServed: service.Location } : {}),
+            offers: {
+              "@type": "Offer",
+              price: service.Base_Price.toFixed(2),
+              priceCurrency: "EUR",
+              availability: "https://schema.org/InStock",
+            },
+          }),
+        }}
+      />
     </article>
   );
 }

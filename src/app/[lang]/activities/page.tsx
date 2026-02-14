@@ -15,6 +15,12 @@ export async function generateMetadata({
   return {
     title: dict.activities.title,
     description: dict.activities.subtitle,
+    openGraph: {
+      type: "website",
+      locale: lang,
+      title: dict.activities.title,
+      description: dict.activities.subtitle?.slice(0, 65),
+    },
     alternates: buildStaticAlternates(lang, "/activities"),
   };
 }

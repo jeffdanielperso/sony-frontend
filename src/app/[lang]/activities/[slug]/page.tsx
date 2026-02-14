@@ -6,6 +6,7 @@ import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getActivityBySlug, getAllActivitySlugs, getStrapiMedia } from "@/lib/strapi";
 import { getAlternateSlug } from "@/lib/i18n-helpers";
+import { SITE_URL } from "@/lib/constants";
 import { AlternateUrlSetter } from "@/components/AlternateUrlContext";
 import { ServiceCard } from "@/components/ServiceCard";
 import { MoonDivider } from "@/components/MoonDivider";
@@ -41,8 +42,8 @@ export async function generateMetadata({
 
   const targetLang = lang === "en" ? "fr" : "en";
   const altSlug = getAlternateSlug(activity.localizations, lang);
-  const currentUrl = `/${lang}/activities/${slug}`;
-  const altUrl = altSlug ? `/${targetLang}/activities/${altSlug}` : null;
+  const currentUrl = `${SITE_URL}/${lang}/activities/${slug}`;
+  const altUrl = altSlug ? `${SITE_URL}/${targetLang}/activities/${altSlug}` : null;
 
   const twitterMeta = seo?.metaSocial?.find((s) => s.socialNetwork === "Twitter");
 
@@ -53,11 +54,14 @@ export async function generateMetadata({
       ? { keywords: seo.keywords.split(",").map((k) => k.trim()) }
       : {}),
     ...(seo?.metaRobots ? { robots: seo.metaRobots } : {}),
-    openGraph: imageUrl
-      ? {
-          images: [{ url: imageUrl }],
-        }
-      : undefined,
+    openGraph: {
+      type: "article",
+      locale: lang,
+      title: seo?.metaTitle ?? activity.Title,
+      description: (seo?.metaDescription ?? activity.Description)?.slice(0, 65),
+      url: currentUrl,
+      ...(imageUrl ? { images: [{ url: imageUrl }] } : {}),
+    },
     ...(twitterMeta
       ? {
           twitter: {
@@ -184,6 +188,37 @@ export default async function ActivityDetailPage({
           </div>
         </section>
       )}
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Course",
+            name: activity.Title,
+            description: activity.seo?.metaDescription ?? activity.Description?.slice(0, 160),
+            url: `${SITE_URL}/${lang}/activities/${slug}`,
+            ...(imageUrl ? { image: imageUrl } : {}),
+            provider: {
+              "@type": "LocalBusiness",
+              name: "Sony Yoga",
+              url: SITE_URL,
+            },
+            inLanguage: lang,
+            ...(activity.Intensity_Level
+              ? {
+                  educationalLevel:
+                    activity.Intensity_Level <= 2
+                      ? "Beginner"
+                      : activity.Intensity_Level <= 4
+                        ? "Intermediate"
+                        : "Advanced",
+                }
+              : {}),
+          }),
+        }}
+      />
     </article>
   );
 }

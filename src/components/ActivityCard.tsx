@@ -23,7 +23,7 @@ export function ActivityCard({ activity, lang, viewDetailsLabel, intensityLabel 
       role="listitem"
     >
       {imageUrl ? (
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-4/3 overflow-hidden">
           <Image
             src={imageUrl}
             alt={activity.Image?.alternativeText ?? activity.Title}
@@ -34,7 +34,7 @@ export function ActivityCard({ activity, lang, viewDetailsLabel, intensityLabel 
         </div>
       ) : (
         <div
-          className="aspect-[4/3] bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+          className="aspect-4/3 bg-linear-to-br from-accent/15 via-accent-soft to-background"
           role="img"
           aria-label={activity.Title}
         />

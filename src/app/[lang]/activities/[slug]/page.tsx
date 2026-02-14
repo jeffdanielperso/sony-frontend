@@ -127,7 +127,7 @@ export default async function ActivityDetailPage({
       </Link>
 
       {imageUrl ? (
-        <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl">
+        <div className="relative mb-8 aspect-16/9 overflow-hidden rounded-2xl">
           <Image
             src={imageUrl}
             alt={activity.Image?.alternativeText ?? activity.Title}
@@ -139,7 +139,7 @@ export default async function ActivityDetailPage({
         </div>
       ) : (
         <div
-          className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+          className="mb-8 aspect-16/9 rounded-2xl bg-linear-to-br from-accent/15 via-accent-soft to-background"
           role="img"
           aria-label={activity.Title}
         />

@@ -125,7 +125,7 @@ export default async function ServiceDetailPage({
       </Link>
 
       {heroImage ? (
-        <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl">
+        <div className="relative mb-8 aspect-16/9 overflow-hidden rounded-2xl">
           <Image
             src={heroImage}
             alt={service.Image?.alternativeText ?? service.Title}
@@ -137,7 +137,7 @@ export default async function ServiceDetailPage({
         </div>
       ) : (
         <div
-          className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+          className="mb-8 aspect-16/9 rounded-2xl bg-linear-to-br from-accent/15 via-accent-soft to-background"
           role="img"
           aria-label={service.Title}
         />

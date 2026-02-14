@@ -110,14 +110,14 @@ export default async function HomePage({
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
             href={`/${lang}${homepage.Hero_CTA_Link}`}
-            className="inline-block min-h-[44px] rounded-full bg-accent px-8 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-accent-hover"
+            className="inline-block min-h-11 rounded-full bg-accent px-8 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-accent-hover"
           >
             {homepage.Hero_CTA_Text}
           </Link>
           {homepage.Hero_CTA_Secondary_Text && homepage.Hero_CTA_Secondary_Link && (
             <Link
               href={`/${lang}${homepage.Hero_CTA_Secondary_Link}`}
-              className="inline-block min-h-[44px] rounded-full border border-accent px-8 py-3 text-sm font-medium tracking-wide text-accent transition-colors hover:bg-accent hover:text-white"
+              className="inline-block min-h-11 rounded-full border border-accent px-8 py-3 text-sm font-medium tracking-wide text-accent transition-colors hover:bg-accent hover:text-white"
             >
               {homepage.Hero_CTA_Secondary_Text}
             </Link>
@@ -158,7 +158,7 @@ export default async function HomePage({
             />
           ) : (
             <div
-              className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+              className="aspect-4/3 rounded-2xl bg-linear-to-br from-accent/15 via-accent-soft to-background"
               role="img"
               aria-label={homepage.About_Title}
             />

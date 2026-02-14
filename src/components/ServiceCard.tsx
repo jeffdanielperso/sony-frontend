@@ -38,7 +38,7 @@ export function ServiceCard({ service, lang, viewDetailsLabel }: ServiceCardProp
       role="listitem"
     >
       {imageUrl ? (
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-4/3 overflow-hidden">
           <Image
             src={imageUrl}
             alt={service.Image?.alternativeText ?? service.Title}
@@ -49,7 +49,7 @@ export function ServiceCard({ service, lang, viewDetailsLabel }: ServiceCardProp
         </div>
       ) : (
         <div
-          className={`aspect-[4/3] bg-gradient-to-br ${gradient}`}
+          className={`aspect-4/3 bg-linear-to-br ${gradient}`}
           role="img"
           aria-label={service.Title}
         />

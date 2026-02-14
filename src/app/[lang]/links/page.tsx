@@ -60,15 +60,30 @@ export default async function LinksPage({
                 {iconUrl && (
                   <Image
                     src={iconUrl}
-                    alt={link.Title}
+                    alt=""
                     width={24}
                     height={24}
                     className="shrink-0"
+                    aria-hidden="true"
                   />
                 )}
                 <span className="flex-1 text-center font-medium text-foreground">
                   {link.Title}
                 </span>
+                <svg
+                  className="h-4 w-4 shrink-0 text-muted"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+                <span className="sr-only">{dict.links.opensNewTab}</span>
               </a>
             );
           })}

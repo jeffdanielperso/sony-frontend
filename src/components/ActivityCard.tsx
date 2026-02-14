@@ -43,7 +43,7 @@ export function ActivityCard({ activity, lang, viewDetailsLabel, intensityLabel 
         <h3 className="font-heading text-lg font-medium text-foreground">{activity.Title}</h3>
         <div className="mt-2 flex items-center gap-2">
           <span className="text-xs text-muted">{intensityLabel}</span>
-          <div className="flex gap-1" aria-label={`${intensityLabel} ${intensity} / 5`}>
+          <div className="flex gap-1" role="img" aria-label={`${intensityLabel} ${intensity} / 5`}>
             {Array.from({ length: 5 }, (_, i) => (
               <span
                 key={i}
@@ -52,6 +52,7 @@ export function ActivityCard({ activity, lang, viewDetailsLabel, intensityLabel 
                     ? "bg-accent shadow-[0_0_4px_var(--accent)]"
                     : "bg-border"
                 }`}
+                aria-hidden="true"
               />
             ))}
           </div>

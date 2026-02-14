@@ -151,7 +151,7 @@ export default async function ActivityDetailPage({
         </h1>
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted">{dict.activities.intensity}</span>
-          <div className="flex gap-1" aria-label={`${dict.activities.intensity} ${intensity} / 5`}>
+          <div className="flex gap-1" role="img" aria-label={`${dict.activities.intensity} ${intensity} / 5`}>
             {Array.from({ length: 5 }, (_, i) => (
               <span
                 key={i}
@@ -160,6 +160,7 @@ export default async function ActivityDetailPage({
                     ? "bg-accent shadow-[0_0_4px_var(--accent)]"
                     : "bg-border"
                 }`}
+                aria-hidden="true"
               />
             ))}
           </div>

@@ -7,7 +7,9 @@
     "home": "Accueil",
     "activities": "Activités",
     "services": "Services",
-    "links": "Liens"
+    "links": "Liens",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "home": {
     "hero": "Trouvez Votre Équilibre",
@@ -51,7 +53,8 @@
   "links": {
     "title": "Restons Connectés",
     "subtitle": "Suivez-moi sur les réseaux sociaux",
-    "noLinks": "Aucun lien disponible pour le moment."
+    "noLinks": "Aucun lien disponible pour le moment.",
+    "opensNewTab": "s'ouvre dans un nouvel onglet"
   },
   "footer": {
     "rights": "Tous droits réservés.",

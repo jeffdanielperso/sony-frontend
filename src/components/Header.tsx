@@ -4,11 +4,12 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { MobileNav } from "@/components/MobileNav";
 import { BrandLogo } from "@/components/BrandLogo";
+import { NavLinks } from "@/components/NavLinks";
 
 interface HeaderProps {
   lang: Locale;
   dict: {
-    nav: { home: string; activities: string; services: string; links: string };
+    nav: { home: string; activities: string; services: string; links: string; openMenu: string; closeMenu: string };
     language: { switchTo: string; current: string };
   };
 }
@@ -29,24 +30,7 @@ export function Header({ lang, dict }: HeaderProps) {
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          <Link
-            href={`/${lang}/activities`}
-            className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-foreground"
-          >
-            {dict.nav.activities}
-          </Link>
-          <Link
-            href={`/${lang}/services`}
-            className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-foreground"
-          >
-            {dict.nav.services}
-          </Link>
-          <Link
-            href={`/${lang}/links`}
-            className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-foreground"
-          >
-            {dict.nav.links}
-          </Link>
+          <NavLinks lang={lang} dict={dict} />
           <ThemeSwitcher />
           <LanguageSwitcher lang={lang} label={dict.language.switchTo} />
         </div>

@@ -45,8 +45,8 @@ Additional fixes in Phase 1:
 | 15 | **No CI/CD pipeline** (GitHub Actions) | DevOps | Medium |
 | 16 | **No security headers** (CSP, HSTS, X-Frame-Options, etc.) | DevOps | Medium |
 | 17 | ~~**`output: "standalone"` not set**~~ — Fixed in Phase 1 | DevOps | Fixed |
-| 18 | **MobileNav lacks focus trap** — WCAG 2.4.3 violation | UI/UX | Small |
-| 19 | **No `aria-current="page"` on nav links** — No active page indication | UI/UX | Small |
+| 18 | ~~**MobileNav lacks focus trap**~~ — Added focus trap with Tab wrapping, return-focus-on-close | UI/UX | Fixed |
+| 19 | ~~**No `aria-current="page"` on nav links**~~ — New `NavLinks` client component for desktop, MobileNav updated for mobile | UI/UX | Fixed |
 | 20 | **Hardcoded English strings** — ~~"No links available."~~ fixed; untranslated `Service_Type` remaining | Frontend + i18n | Small |
 | 21 | **Middleware doesn't persist locale preference** (no cookie) | Frontend | Small |
 | 22 | **`sharp` dependency missing** — Slow image optimization in production | DevOps | Trivial |
@@ -63,7 +63,7 @@ Additional fixes in Phase 1:
 | 26 | ~~**Activity detail ignores `seo?.metaImage` fallback**~~ — Fixed, now uses `seo?.metaImage?.url ?? Image?.url` | SEO | Fixed |
 | 27 | ~~**No `seo?.canonicalUrl` override or `metaRobots` support**~~ — Both wired into generateMetadata | SEO | Fixed |
 | 28 | **Emoji service type icons** — Inconsistent rendering across platforms | UI/UX | Small |
-| 29 | **External links on Links page lack "opens in new tab" indication** | UI/UX | Trivial |
+| 29 | ~~**External links on Links page lack "opens in new tab" indication**~~ — Added arrow icon + sr-only text | UI/UX | Fixed |
 | 30 | **No error tracking** (Sentry or similar) | DevOps | Medium |
 | 31 | **No health check API endpoint** | DevOps | Small |
 | 32 | **Pre-commit hooks** (husky + lint-staged) | DevOps | Small |
@@ -100,9 +100,9 @@ Lockfile, `.env.example`, standalone output, production image patterns, locale v
 
 `sitemap.ts`, `robots.ts`, JSON-LD structured data (Course, Service+Offer, LocalBusiness), OpenGraph type/locale on all pages, Twitter cards from metaSocial, absolute canonical/hreflang URLs, all Strapi SEO fields wired (keywords, metaRobots, canonicalUrl, metaSocial), `SITE_URL` centralized in `src/lib/constants.ts`.
 
-### Phase 3 — Accessibility (P1 a11y)
+### Phase 3 — Accessibility (P1 a11y) — COMPLETED 2026-02-14
 
-Focus trap, `aria-current`, contrast fixes, external link indicators, intensity dots roles.
+Focus trap in MobileNav with return-focus-on-close, `aria-current="page"` via NavLinks component (desktop) and MobileNav (mobile), external link arrow icon + sr-only text, intensity dots `role="img"` + `aria-hidden`, dictionary keys for menu labels.
 
 ### Phase 4 — DevOps (P1 infra)
 

@@ -12,40 +12,77 @@ import { useAlternateUrl } from "@/components/AlternateUrlContext";
 interface MobileNavProps {
   lang: Locale;
   dict: {
-    nav: { home: string; activities: string; services: string; links: string };
+    nav: { home: string; activities: string; services: string; links: string; openMenu: string; closeMenu: string };
     language: { switchTo: string; current: string };
   };
 }
 
 export function MobileNav({ lang, dict }: MobileNavProps) {
   const [open, setOpen] = useState(false);
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const { alternateUrl } = useAlternateUrl();
 
   const targetLocale = lang === "en" ? "fr" : "en";
   const langPath = alternateUrl ?? pathname.replace(`/${lang}`, `/${targetLocale}`);
 
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-      closeRef.current?.focus();
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  function handleClose() {
+    setOpen(false);
+    requestAnimationFrame(() => {
+      openButtonRef.current?.focus();
+    });
+  }
 
   useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+    if (!open) return;
+
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    document.body.style.overflow = "hidden";
+
+    const closeBtn = dialog.querySelector<HTMLElement>("button");
+    closeBtn?.focus();
+
+    function getFocusableElements() {
+      return dialog!.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      );
     }
-    if (open) {
-      document.addEventListener("keydown", onKey);
-      return () => document.removeEventListener("keydown", onKey);
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        handleClose();
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const focusable = getFocusableElements();
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, [open]);
 
   const navLinks = [
@@ -58,9 +95,10 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
   return (
     <div className="md:hidden">
       <button
+        ref={openButtonRef}
         onClick={() => setOpen(true)}
         className="flex h-11 w-11 items-center justify-center rounded-lg text-foreground"
-        aria-label="Open menu"
+        aria-label={dict.nav.openMenu}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
           <line x1="3" y1="6" x2="21" y2="6" />
@@ -71,6 +109,7 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
 
       {open && createPortal(
         <div
+          ref={dialogRef}
           className="fixed inset-0 z-100 flex flex-col bg-background"
           role="dialog"
           aria-modal="true"
@@ -82,10 +121,9 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
               Sony Yoga
             </span>
             <button
-              ref={closeRef}
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
               className="flex h-11 w-11 items-center justify-center rounded-lg text-foreground"
-              aria-label="Close menu"
+              aria-label={dict.nav.closeMenu}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -95,21 +133,26 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
           </div>
 
           <nav className="flex flex-1 flex-col items-center justify-center gap-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="w-full max-w-xs py-4 text-center font-heading text-2xl font-light text-foreground transition-colors hover:text-accent"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isHome = link.href === `/${lang}`;
+              const isCurrent = isHome ? pathname === link.href : (pathname === link.href || pathname.startsWith(link.href + "/"));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={handleClose}
+                  className="w-full max-w-xs py-4 text-center font-heading text-2xl font-light text-foreground transition-colors hover:text-accent"
+                  {...(isCurrent ? { "aria-current": "page" as const } : {})}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
 
             <div className="mt-8 flex items-center gap-4">
               <Link
                 href={langPath}
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground"
                 hrefLang={targetLocale}
               >

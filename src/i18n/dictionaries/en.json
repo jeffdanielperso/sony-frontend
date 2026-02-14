@@ -7,7 +7,9 @@
     "home": "Home",
     "activities": "Activities",
     "services": "Services",
-    "links": "Links"
+    "links": "Links",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
     "hero": "Find Your Balance",
@@ -51,7 +53,8 @@
   "links": {
     "title": "Connect With Me",
     "subtitle": "Follow me on social media",
-    "noLinks": "No links available at the moment."
+    "noLinks": "No links available at the moment.",
+    "opensNewTab": "opens in a new tab"
   },
   "footer": {
     "rights": "All rights reserved.",

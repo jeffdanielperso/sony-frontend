@@ -52,6 +52,7 @@ Tailwind v4 with custom CSS variables in `src/app/globals.css` for light/dark th
 
 | Agent | Model | Role |
 |-------|-------|------|
+| `wellness-marketing` | Opus | Define content strategy, page structure, copywriting (EN/FR), brand positioning |
 | `frontend-architect` | Opus | Plan Next.js architecture, routing, component design, performance |
 | `seo-architect` | Opus | Plan SEO strategy — metadata, structured data, OpenGraph, Core Web Vitals |
 | `ui-ux-architect` | Opus | Plan UI/UX design, accessibility, responsive strategy, component patterns |

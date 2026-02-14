@@ -160,12 +160,12 @@ export async function getActivityBySlug(slug: string, locale: Locale) {
 
 export async function getAllActivitySlugs() {
   const [en, fr] = await Promise.all([
-    fetchStrapi<Activity[]>("/activities", { locale: "en", pagination: { pageSize: 100 } }),
-    fetchStrapi<Activity[]>("/activities", { locale: "fr", pagination: { pageSize: 100 } }),
+    fetchStrapi<Activity[]>("/activities", { locale: "en", populate: "localizations", pagination: { pageSize: 100 } }),
+    fetchStrapi<Activity[]>("/activities", { locale: "fr", populate: "localizations", pagination: { pageSize: 100 } }),
   ]);
   return {
-    en: en.data.map((a) => a.Slug),
-    fr: fr.data.map((a) => a.Slug),
+    en: en.data.map((a) => ({ slug: a.Slug, localizations: a.localizations })),
+    fr: fr.data.map((a) => ({ slug: a.Slug, localizations: a.localizations })),
   };
 }
 
@@ -190,12 +190,12 @@ export async function getServiceBySlug(slug: string, locale: Locale) {
 
 export async function getAllServiceSlugs() {
   const [en, fr] = await Promise.all([
-    fetchStrapi<Service[]>("/services", { locale: "en", pagination: { pageSize: 100 } }),
-    fetchStrapi<Service[]>("/services", { locale: "fr", pagination: { pageSize: 100 } }),
+    fetchStrapi<Service[]>("/services", { locale: "en", populate: "localizations", pagination: { pageSize: 100 } }),
+    fetchStrapi<Service[]>("/services", { locale: "fr", populate: "localizations", pagination: { pageSize: 100 } }),
   ]);
   return {
-    en: en.data.map((s) => s.Slug),
-    fr: fr.data.map((s) => s.Slug),
+    en: en.data.map((s) => ({ slug: s.Slug, localizations: s.localizations })),
+    fr: fr.data.map((s) => ({ slug: s.Slug, localizations: s.localizations })),
   };
 }
 

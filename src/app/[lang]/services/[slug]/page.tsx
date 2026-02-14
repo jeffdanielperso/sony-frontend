@@ -15,10 +15,10 @@ export async function generateStaticParams() {
   const slugs = await getAllServiceSlugs();
   const params: { lang: string; slug: string }[] = [];
 
-  for (const slug of slugs.en) {
+  for (const { slug } of slugs.en) {
     params.push({ lang: "en", slug });
   }
-  for (const slug of slugs.fr) {
+  for (const { slug } of slugs.fr) {
     params.push({ lang: "fr", slug });
   }
 

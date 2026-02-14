@@ -29,7 +29,7 @@ export default async function ActivitiesPage({
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-12 text-center">
-        <h1 className="text-4xl font-light tracking-tight sm:text-5xl text-foreground">
+        <h1 className="font-heading text-4xl font-light tracking-tight sm:text-5xl text-foreground">
           {dict.activities.title}
         </h1>
         <p className="mt-4 text-lg text-muted">{dict.activities.subtitle}</p>
@@ -38,7 +38,7 @@ export default async function ActivitiesPage({
       {activities.length === 0 ? (
         <p className="text-center text-muted">{dict.activities.noActivities}</p>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {activities.map((activity) => (
             <ActivityCard
               key={activity.documentId}

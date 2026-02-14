@@ -35,14 +35,19 @@
     "duration": "Duration",
     "location": "Location",
     "price": "Price",
-    "sessions": "sessions"
+    "sessions": "sessions",
+    "perSession": "per session"
   },
   "links": {
     "title": "Connect With Us",
     "subtitle": "Follow us on social media"
   },
   "footer": {
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "tagline": "Mind, body, soul",
+    "navTitle": "Navigation",
+    "activitiesTitle": "Our Practices",
+    "socialTitle": "Connect"
   },
   "language": {
     "switchTo": "Français",

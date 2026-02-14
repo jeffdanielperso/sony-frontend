@@ -9,5 +9,6 @@ const dictionaries = {
 };
 
 export async function getDictionary(locale: Locale) {
-  return dictionaries[locale]();
+  const loader = dictionaries[locale] ?? dictionaries[defaultLocale];
+  return loader();
 }

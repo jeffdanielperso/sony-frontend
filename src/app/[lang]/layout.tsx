@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/config";
 import type { Locale } from "@/types/strapi";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const heading = Cormorant_Garamond({
+  variable: "--font-heading",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const body = DM_Sans({
+  variable: "--font-body",
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
 });
 
 export async function generateStaticParams() {
@@ -23,10 +26,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as Locale);
   return {
     title: {
       default: dict.site.title,
@@ -36,27 +39,42 @@ export async function generateMetadata({
   };
 }
 
+const themeScript = `
+(function(){
+  try {
+    var theme = localStorage.getItem("theme");
+    if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
+    }
+  } catch(e) {}
+})();
+`;
+
 export default async function LangLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const locale = lang as Locale;
+  const dict = await getDictionary(locale);
 
   return (
-    <html lang={lang}>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${heading.variable} ${body.variable} font-sans antialiased bg-background text-foreground`}
       >
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
-        <Header lang={lang} dict={dict} />
+        <Header lang={locale} dict={dict} />
         <main id="main-content" className="min-h-screen">{children}</main>
-        <Footer dict={dict} />
+        <Footer lang={locale} dict={dict} />
       </body>
     </html>
   );

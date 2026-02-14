@@ -29,7 +29,7 @@ export default async function LinksPage({
   return (
     <section className="flex min-h-[80vh] flex-col items-center justify-center px-6 py-16">
       <div className="w-full max-w-md text-center">
-        <div className="mb-2 text-4xl font-light tracking-widest uppercase text-foreground">
+        <div className="font-heading text-3xl font-light tracking-widest uppercase text-foreground">
           Sony Yoga
         </div>
         <p className="mb-10 text-sm text-muted">{dict.links.subtitle}</p>
@@ -43,7 +43,7 @@ export default async function LinksPage({
                 href={link.URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-4 transition-all hover:border-accent hover:shadow-md"
+                className="flex items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-4 transition-all hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-0.5"
               >
                 {iconUrl && (
                   <Image

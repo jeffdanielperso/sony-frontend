@@ -15,12 +15,22 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
   const newPath = pathname.replace(`/${lang}`, `/${targetLocale}`);
 
   return (
-    <Link
-      href={newPath}
-      className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-foreground"
-      aria-label={`Switch language to ${label}`}
-    >
-      {label}
-    </Link>
+    <div className="flex items-center gap-1 text-sm font-medium tracking-wide">
+      <span className={lang === "en" ? "text-foreground" : "text-muted"}>
+        EN
+      </span>
+      <span className="text-border">/</span>
+      <span className={lang === "fr" ? "text-foreground" : "text-muted"}>
+        FR
+      </span>
+      <Link
+        href={newPath}
+        className="ml-1 px-3 py-2 text-muted transition-colors hover:text-foreground"
+        aria-label={`Switch language to ${label}`}
+        hrefLang={targetLocale}
+      >
+        {label}
+      </Link>
+    </div>
   );
 }

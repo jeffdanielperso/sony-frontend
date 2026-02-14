@@ -6,6 +6,7 @@ import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getActivityBySlug, getAllActivitySlugs, getStrapiMedia } from "@/lib/strapi";
 import { ServiceCard } from "@/components/ServiceCard";
+import { MoonDivider } from "@/components/MoonDivider";
 
 export async function generateStaticParams() {
   const slugs = await getAllActivitySlugs();
@@ -88,11 +89,15 @@ export default async function ActivityDetailPage({
           />
         </div>
       ) : (
-        <div className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5" />
+        <div
+          className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+          role="img"
+          aria-label={activity.Title}
+        />
       )}
 
       <div className="flex flex-wrap items-center gap-4">
-        <h1 className="text-3xl font-light tracking-tight sm:text-4xl text-foreground">
+        <h1 className="font-heading text-3xl font-light tracking-tight sm:text-4xl text-foreground">
           {activity.Title}
         </h1>
         <div className="flex items-center gap-2">
@@ -102,7 +107,9 @@ export default async function ActivityDetailPage({
               <span
                 key={i}
                 className={`inline-block h-2.5 w-2.5 rounded-full ${
-                  i < intensity ? "bg-accent" : "bg-border"
+                  i < intensity
+                    ? "bg-accent shadow-[0_0_4px_var(--accent)]"
+                    : "bg-border"
                 }`}
               />
             ))}
@@ -116,10 +123,11 @@ export default async function ActivityDetailPage({
 
       {activity.services?.length > 0 && (
         <section className="mt-16">
-          <h2 className="mb-6 text-2xl font-light tracking-tight text-foreground">
+          <MoonDivider />
+          <h2 className="mb-6 font-heading text-2xl font-light tracking-tight text-foreground">
             {dict.activities.tryThisStyle}
           </h2>
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid gap-8 sm:grid-cols-2" role="list">
             {activity.services.map((service) => (
               <ServiceCard
                 key={service.documentId}

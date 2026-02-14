@@ -5,6 +5,7 @@ import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getServiceBySlug, getAllServiceSlugs } from "@/lib/strapi";
 import { BundleCard } from "@/components/BundleCard";
+import { MoonDivider } from "@/components/MoonDivider";
 
 export async function generateStaticParams() {
   const slugs = await getAllServiceSlugs();
@@ -62,19 +63,23 @@ export default async function ServiceDetailPage({
         &larr; {dict.services.backToServices}
       </Link>
 
-      <div className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5" />
+      <div
+        className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+        role="img"
+        aria-label={service.Title}
+      />
 
       <div className="flex flex-wrap items-center gap-4">
-        <h1 className="text-3xl font-light tracking-tight sm:text-4xl text-foreground">
+        <h1 className="font-heading text-3xl font-light tracking-tight sm:text-4xl text-foreground">
           {service.Title}
         </h1>
-        <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+        <span className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-hover">
           {service.Service_Type}
         </span>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-6 text-sm text-muted">
-        <span>
+        <span aria-label={`Price: ${service.Base_Price.toFixed(2)} euros`}>
           <strong className="text-foreground">{dict.services.price}:</strong>{" "}
           {service.Base_Price.toFixed(2)} &euro;
         </span>
@@ -98,7 +103,8 @@ export default async function ServiceDetailPage({
 
       {service.activities?.length > 0 && (
         <section className="mt-16">
-          <h2 className="mb-4 text-2xl font-light tracking-tight text-foreground">
+          <MoonDivider />
+          <h2 className="mb-4 font-heading text-2xl font-light tracking-tight text-foreground">
             {dict.services.availableStyles}
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -106,7 +112,7 @@ export default async function ServiceDetailPage({
               <Link
                 key={activity.documentId}
                 href={`/${lang}/activities/${activity.Slug}`}
-                className="rounded-full bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
+                className="rounded-full bg-accent-soft px-4 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
               >
                 {activity.Title}
               </Link>
@@ -117,7 +123,7 @@ export default async function ServiceDetailPage({
 
       {service.bundles?.length > 0 && (
         <section className="mt-12">
-          <h2 className="mb-4 text-2xl font-light tracking-tight text-foreground">
+          <h2 className="mb-4 font-heading text-2xl font-light tracking-tight text-foreground">
             {dict.services.saveWithBundle}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -126,6 +132,7 @@ export default async function ServiceDetailPage({
                 key={bundle.documentId}
                 bundle={bundle}
                 sessionsLabel={dict.services.sessions}
+                perSessionLabel={dict.services.perSession}
               />
             ))}
           </div>

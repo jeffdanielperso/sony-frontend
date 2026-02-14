@@ -1,10 +1,9 @@
 ---
 name: docs-writer
+description: You are a technical writer creating documentation for a Next.js frontend application.
 model: sonnet
 tools: Read, Write, Edit, Grep, Glob
 ---
-
-You are a technical writer creating documentation for a Next.js frontend application.
 
 ## Role
 

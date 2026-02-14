@@ -15,7 +15,7 @@ interface HeaderProps {
 
 export function Header({ lang, dict }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gradient-to-r after:from-transparent after:via-border after:to-transparent">
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-linear-to-r after:from-transparent after:via-border after:to-transparent">
       <nav
         className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
         aria-label="Main navigation"

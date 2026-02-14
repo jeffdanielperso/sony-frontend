@@ -17,7 +17,7 @@ export function Footer({ lang, dict }: FooterProps) {
     <footer className="relative bg-background">
       {/* Gradient top separator */}
       <div
-        className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent"
+        className="h-px w-full bg-linear-to-r from-transparent via-border to-transparent"
         aria-hidden="true"
       />
 
@@ -79,11 +79,11 @@ export function Footer({ lang, dict }: FooterProps) {
 
         {/* Moon divider */}
         <div className="my-8 flex items-center justify-center gap-3" aria-hidden="true">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
+          <div className="h-px flex-1 bg-linear-to-r from-transparent to-border" />
           <div className="h-2 w-2 rounded-full bg-accent/40" />
           <div className="h-2.5 w-2.5 rounded-full bg-accent/60" />
           <div className="h-2 w-2 rounded-full bg-accent/40" />
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
+          <div className="h-px flex-1 bg-linear-to-l from-transparent to-border" />
         </div>
 
         <p className="text-center text-sm text-muted">

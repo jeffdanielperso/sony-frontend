@@ -1,4 +1,4 @@
-import type { StrapiResponse, Activity, Service, SocialLink, Locale } from "@/types/strapi";
+import type { StrapiResponse, Activity, Service, SocialLink, Homepage, Locale } from "@/types/strapi";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
@@ -152,7 +152,7 @@ export async function getActivities(locale: Locale) {
 export async function getActivityBySlug(slug: string, locale: Locale) {
   const res = await fetchStrapi<Activity[]>("/activities", {
     locale,
-    populate: ["Image", "services", "seo", "localizations"],
+    populate: ["Image", "services", "services.Image", "seo", "seo.metaImage", "seo.metaSocial", "seo.metaSocial.image", "localizations"],
     filters: { Slug: { $eq: slug } },
   });
   return res.data[0] ?? null;
@@ -182,7 +182,7 @@ export async function getServices(locale: Locale) {
 export async function getServiceBySlug(slug: string, locale: Locale) {
   const res = await fetchStrapi<Service[]>("/services", {
     locale,
-    populate: ["Image", "activities", "activities.Image", "bundles", "seo", "localizations"],
+    populate: ["Image", "activities", "activities.Image", "bundles", "seo", "seo.metaImage", "seo.metaSocial", "seo.metaSocial.image", "localizations"],
     filters: { Slug: { $eq: slug } },
   });
   return res.data[0] ?? null;
@@ -206,6 +206,27 @@ export async function getSocialLinks() {
     populate: "Icon",
     sort: "Order:asc",
     filters: { IsActive: { $eq: true } },
+  });
+  return res.data;
+}
+
+// --- Homepage queries ---
+
+export async function getHomepage(locale: Locale) {
+  const res = await fetchStrapi<Homepage>("/homepage", {
+    locale,
+    populate: [
+      "Hero_Image",
+      "About_Image",
+      "featured_activities",
+      "featured_activities.Image",
+      "featured_services",
+      "featured_services.Image",
+      "seo",
+      "seo.metaImage",
+      "seo.metaSocial",
+      "seo.metaSocial.image",
+    ],
   });
   return res.data;
 }

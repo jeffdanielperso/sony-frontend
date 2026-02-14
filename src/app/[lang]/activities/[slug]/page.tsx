@@ -36,23 +36,46 @@ export async function generateMetadata({
     return { title: "Not Found" };
   }
 
-  const imageUrl = getStrapiMedia(activity.Image?.url);
+  const seo = activity.seo;
+  const imageUrl = getStrapiMedia(seo?.metaImage?.url ?? activity.Image?.url);
 
   const targetLang = lang === "en" ? "fr" : "en";
   const altSlug = getAlternateSlug(activity.localizations, lang);
   const currentUrl = `/${lang}/activities/${slug}`;
   const altUrl = altSlug ? `/${targetLang}/activities/${altSlug}` : null;
 
+  const twitterMeta = seo?.metaSocial?.find((s) => s.socialNetwork === "Twitter");
+
   return {
-    title: activity.seo?.metaTitle ?? activity.Title,
-    description: activity.seo?.metaDescription ?? activity.Description?.slice(0, 160),
+    title: seo?.metaTitle ?? activity.Title,
+    description: seo?.metaDescription ?? activity.Description?.slice(0, 160),
+    ...(seo?.keywords
+      ? { keywords: seo.keywords.split(",").map((k) => k.trim()) }
+      : {}),
+    ...(seo?.metaRobots ? { robots: seo.metaRobots } : {}),
     openGraph: imageUrl
       ? {
-          images: [{ url: imageUrl, width: activity.Image!.width, height: activity.Image!.height }],
+          images: [{ url: imageUrl }],
         }
       : undefined,
+    ...(twitterMeta
+      ? {
+          twitter: {
+            card: "summary_large_image" as const,
+            title: twitterMeta.title,
+            description: twitterMeta.description,
+            ...(getStrapiMedia(twitterMeta.image?.url)
+              ? { images: [getStrapiMedia(twitterMeta.image?.url)!] }
+              : imageUrl
+                ? { images: [imageUrl] }
+                : {}),
+          },
+        }
+      : {}),
     alternates: {
-      canonical: currentUrl,
+      ...(seo?.canonicalUrl
+        ? { canonical: seo.canonicalUrl }
+        : { canonical: currentUrl }),
       languages: altUrl
         ? {
             en: lang === "en" ? currentUrl : altUrl,

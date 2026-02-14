@@ -13,7 +13,17 @@
     "hero": "Trouvez Votre Équilibre",
     "subtitle": "Des expériences de yoga de luxe conçues pour votre bien-être",
     "ctaActivities": "Découvrir Nos Styles",
-    "ctaServices": "Réserver une Séance"
+    "ctaServices": "Réserver une Séance",
+    "featuredActivities": {
+      "title": "Découvrez Nos Styles de Yoga",
+      "subtitle": "Trouvez la pratique qui vous parle",
+      "cta": "Voir Toutes les Activités"
+    },
+    "featuredServices": {
+      "title": "Nos Formats de Séance",
+      "subtitle": "Choisissez votre façon de pratiquer",
+      "cta": "Voir Tous les Services"
+    }
   },
   "activities": {
     "title": "Nos Activités",

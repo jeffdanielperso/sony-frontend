@@ -108,6 +108,29 @@ export interface SocialLink {
   publishedAt: string;
 }
 
+export interface Homepage {
+  Hero_Title: string;
+  Hero_Subtitle: string;
+  Hero_CTA_Text: string;
+  Hero_CTA_Link: string;
+  Hero_CTA_Secondary_Text?: string | null;
+  Hero_CTA_Secondary_Link?: string | null;
+  Hero_Image?: StrapiImage | null;
+  About_Title: string;
+  About_Description: string;
+  About_CTA_Text?: string | null;
+  About_CTA_Link?: string | null;
+  About_Image?: StrapiImage | null;
+  Featured_Activities_Title?: string | null;
+  Featured_Activities_Subtitle?: string | null;
+  Featured_Services_Title?: string | null;
+  Featured_Services_Subtitle?: string | null;
+  featured_activities: Activity[];
+  featured_services: Service[];
+  seo?: Seo | null;
+  locale: string;
+}
+
 export interface StrapiResponse<T> {
   data: T;
   meta: {

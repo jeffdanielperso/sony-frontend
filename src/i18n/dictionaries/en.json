@@ -13,7 +13,17 @@
     "hero": "Find Your Balance",
     "subtitle": "Luxury yoga experiences crafted for your well-being",
     "ctaActivities": "Explore Our Styles",
-    "ctaServices": "Book a Session"
+    "ctaServices": "Book a Session",
+    "featuredActivities": {
+      "title": "Explore Our Yoga Styles",
+      "subtitle": "Find the practice that speaks to you",
+      "cta": "View All Activities"
+    },
+    "featuredServices": {
+      "title": "Our Session Formats",
+      "subtitle": "Choose how you want to practice",
+      "cta": "View All Services"
+    }
   },
   "activities": {
     "title": "Our Activities",

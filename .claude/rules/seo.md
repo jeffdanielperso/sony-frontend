@@ -8,8 +8,14 @@ paths:
 - **generateMetadata on every page** — All `page.tsx` files with CMS data must export `generateMetadata`
 - **Fallback chain** — Always use: `seo?.metaTitle ?? Title`, `seo?.metaDescription ?? Description?.slice(0, 160)`
 - **Character limits** — metaTitle: 60 chars, metaDescription: 160 chars, OG title: 60 chars, OG description: 65 chars
-- **OpenGraph images** — Include `openGraph.images` using `seo?.metaImage?.url ?? Image?.url` with full URL (prepend `NEXT_PUBLIC_STRAPI_URL` if relative)
+- **All Strapi SEO fields** — Every page with CMS SEO data must use all fields from the `Seo` interface:
+  - `metaTitle` / `metaDescription` — Primary metadata with fallbacks to content fields
+  - `metaImage` — Used for `openGraph.images`, falls back to the content's `Image` field. Use `getStrapiMedia()` for full URLs
+  - `keywords` — Split comma-separated string into array: `seo.keywords.split(",").map(k => k.trim())`
+  - `metaRobots` — Pass directly to `robots` in metadata (e.g. `"noindex, follow"`)
+  - `canonicalUrl` — Override the default canonical URL when provided by Strapi
+  - `metaSocial` — Array with `"Facebook"` and `"Twitter"` entries. Map Twitter entry to `twitter: { card, title, description, images }`. Map Facebook entry to override `openGraph` title/description
 - **Structured data** — Use JSON-LD via `<script type="application/ld+json">` for content pages (Activity→Course, Service→Service, Bundle→Offer)
-- **Populate SEO** — Ensure `fetchStrapi` calls for page data include `"seo"` in the populate parameter
+- **Populate SEO deeply** — `fetchStrapi` calls must populate `"seo"`, `"seo.metaImage"`, `"seo.metaSocial"`, and `"seo.metaSocial.image"` — not just `"seo"` alone
 - **hreflang** — Include alternate language links for en/fr versions of each page
 - **Canonical URLs** — Use `seo?.canonicalUrl` when available, otherwise construct from the current route

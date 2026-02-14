@@ -31,7 +31,9 @@ Dictionaries are lazy-loaded JSON files in `src/i18n/dictionaries/`. Every page 
 - Strapi 5 nested populate syntax (bracket notation via `appendPopulate`)
 - ISR with 60-second revalidation
 
-Content types: **Activity**, **Service**, **Bundle**, **SocialLink** (defined in `src/types/strapi.ts`). Services have no Image field in Strapi. Activities have an optional Image. Bundles have no Slug or Image.
+Content types: **Activity**, **Service**, **Bundle**, **SocialLink** (defined in `src/types/strapi.ts`). Activities and Services have an optional Image. Bundles have no Slug or Image.
+
+**SEO component:** Content types with SEO use the shared `Seo` interface (`metaTitle`, `metaDescription`, `metaImage`, `keywords`, `canonicalUrl`, `metaRobots`, `metaSocial`). All fields must be wired into `generateMetadata`. Queries must deeply populate: `"seo"`, `"seo.metaImage"`, `"seo.metaSocial"`, `"seo.metaSocial.image"`.
 
 ### Environment Variables
 

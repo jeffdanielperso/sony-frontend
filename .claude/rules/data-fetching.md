@@ -9,7 +9,7 @@ paths:
 - **Never call Strapi directly** — No raw `fetch()` calls to the Strapi API from pages or components
 - **Populate syntax** — Use Strapi 5 bracket notation via `appendPopulate` helper for nested relations
 - **Locale codes** — Strapi is configured with `"en"` and `"fr"` locale codes — no `fr-FR` mapping is needed. Pass `Locale` values directly
-- **Localizations** — Detail queries (`getActivityBySlug`, `getServiceBySlug`) populate `localizations` for cross-locale slug resolution. Listing queries don't need this
+- **Localizations** — Detail queries (`getActivityBySlug`, `getServiceBySlug`) and slug listing queries (`getAllActivitySlugs`, `getAllServiceSlugs`) populate `localizations` for cross-locale slug resolution. The slug listing functions return `{ slug, localizations }` objects (not plain strings) so the sitemap can build cross-locale alternates
 - **SEO sub-relations** — Detail and page queries must deeply populate SEO: `"seo"`, `"seo.metaImage"`, `"seo.metaSocial"`, `"seo.metaSocial.image"`. Populating only `"seo"` misses nested relations
 - **ISR revalidation** — `fetchStrapi` uses `revalidate: 60` by default. Do not override without good reason
 - **Type safety** — Always provide a generic type parameter: `fetchStrapi<Activity[]>(...)`, never untyped

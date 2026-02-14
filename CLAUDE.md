@@ -35,9 +35,17 @@ Content types: **Activity**, **Service**, **Bundle**, **SocialLink** (defined in
 
 **SEO component:** Content types with SEO use the shared `Seo` interface (`metaTitle`, `metaDescription`, `metaImage`, `keywords`, `canonicalUrl`, `metaRobots`, `metaSocial`). All fields must be wired into `generateMetadata`. Queries must deeply populate: `"seo"`, `"seo.metaImage"`, `"seo.metaSocial"`, `"seo.metaSocial.image"`.
 
+### SEO Infrastructure
+
+- `src/app/sitemap.ts` — Dynamic sitemap with all localized pages. Uses `localizations` to resolve cross-locale slug alternates (e.g. `/en/activities/yoga-flow` ↔ `/fr/activities/flux-de-yoga`)
+- `src/app/robots.ts` — Allows all crawlers, references sitemap URL
+- `src/lib/constants.ts` — Centralized `SITE_URL` constant (defaults to `https://sonyyoga.com`). Used for absolute URLs in sitemaps, canonical/hreflang, and JSON-LD
+- JSON-LD structured data: `LocalBusiness` (homepage), `Course` (activity detail), `Service`+`Offer` (service detail)
+
 ### Environment Variables
 
 - `NEXT_PUBLIC_STRAPI_URL` — Strapi base URL (default: `http://localhost:1337`)
+- `NEXT_PUBLIC_SITE_URL` — Public site URL for absolute URLs in SEO (default: `https://sonyyoga.com`)
 - `STRAPI_API_TOKEN` — Bearer token for Strapi API (server-only)
 
 ### Rendering

@@ -89,7 +89,7 @@ export default async function HomePage({
             alt=""
             fill
             priority
-            className="-z-20 object-cover opacity-15"
+            className="-z-20 object-cover opacity-25 dark:opacity-10"
             sizes="100vw"
           />
         )}

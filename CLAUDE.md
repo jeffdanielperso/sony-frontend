@@ -52,6 +52,7 @@ Tailwind v4 with custom CSS variables in `src/app/globals.css` for light/dark th
 |-------|-------|------|
 | `frontend-architect` | Opus | Plan Next.js architecture, routing, component design, performance |
 | `seo-architect` | Opus | Plan SEO strategy — metadata, structured data, OpenGraph, Core Web Vitals |
+| `ui-ux-architect` | Opus | Plan UI/UX design, accessibility, responsive strategy, component patterns |
 | `devops-architect` | Opus | Plan AWS deployment, CI/CD pipelines, Docker, CDN strategy |
 | `frontend-developer` | Sonnet | Implement pages, components, data-fetching, i18n, Strapi integration |
 | `seo-engineer` | Sonnet | Implement metadata, structured data, sitemap, robots.txt |

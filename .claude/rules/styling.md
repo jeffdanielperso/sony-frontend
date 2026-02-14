@@ -1,5 +1,5 @@
 ---
-applies_to:
+paths:
   - "src/**/*.tsx"
   - "src/**/*.css"
 ---

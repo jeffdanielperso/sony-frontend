@@ -1,9 +1,8 @@
 ---
 name: deploy-plan
 description: Analyze current setup and propose AWS deployment strategy.
-model: opus
-user_invocable: true
-disable_model_invocation: true
+user-invokable: true
+disable-model-invocation: true
 ---
 
 When the user runs `/deploy-plan`:

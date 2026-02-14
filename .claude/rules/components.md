@@ -1,5 +1,6 @@
 ---
-applies_to: "src/components/**"
+paths:
+  - "src/components/**"
 ---
 
 # Component Rules

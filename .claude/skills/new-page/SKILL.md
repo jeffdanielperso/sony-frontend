@@ -1,8 +1,7 @@
 ---
 name: new-page
 description: Scaffold a new [lang] page with generateMetadata, generateStaticParams, dictionary keys, and SEO.
-model: sonnet
-user_invocable: true
+user-invokable: true
 ---
 
 When the user runs `/new-page [name]`:

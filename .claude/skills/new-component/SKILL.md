@@ -1,8 +1,7 @@
 ---
 name: new-component
 description: Scaffold a new component with TypeScript props interface, following existing patterns.
-model: sonnet
-user_invocable: true
+user-invokable: true
 ---
 
 When the user runs `/new-component [name]`:

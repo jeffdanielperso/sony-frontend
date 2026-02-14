@@ -1,9 +1,8 @@
 ---
 name: review
 description: Review staged git changes for quality, security, Next.js best practices, SEO, and Strapi integration.
-model: opus
-user_invocable: true
-disable_model_invocation: true
+user-invokable: true
+disable-model-invocation: true
 ---
 
 When the user runs `/review`:

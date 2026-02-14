@@ -1,8 +1,7 @@
 ---
 name: perf-audit
 description: Audit bundle size, image optimization, ISR/SSG strategy, and Core Web Vitals readiness.
-model: haiku
-user_invocable: true
+user-invokable: true
 ---
 
 When the user runs `/perf-audit`:

@@ -1,5 +1,6 @@
 ---
-applies_to: "src/app/**"
+paths:
+  - "src/app/**"
 ---
 
 # SEO Rules

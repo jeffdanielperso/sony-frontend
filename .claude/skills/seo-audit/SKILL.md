@@ -1,8 +1,7 @@
 ---
 name: seo-audit
 description: Audit all pages for SEO completeness — metadata, OpenGraph, structured data, alt text, canonical URLs.
-model: haiku
-user_invocable: true
+user-invokable: true
 ---
 
 When the user runs `/seo-audit`:

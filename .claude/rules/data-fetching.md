@@ -1,5 +1,6 @@
 ---
-applies_to: "src/lib/**"
+paths:
+  - "src/lib/**"
 ---
 
 # Data Fetching Rules

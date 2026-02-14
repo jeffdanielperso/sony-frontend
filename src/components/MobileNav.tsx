@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/types/strapi";
@@ -66,15 +67,15 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
         </svg>
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
-          className="fixed inset-0 z-50 flex flex-col bg-background/95 backdrop-blur-lg"
+          className="fixed inset-0 z-100 flex flex-col bg-background"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
         >
           <div className="flex items-center justify-between px-6 py-4">
-            <span className="flex items-center gap-3 font-heading text-xl font-light tracking-[0.3em] uppercase text-foreground">
+            <span className="flex items-center gap-3 font-heading text-xl font-medium tracking-[0.3em] uppercase text-foreground">
               <BrandLogo size={36} />
               Sony Yoga
             </span>
@@ -115,7 +116,8 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
               <ThemeSwitcher />
             </div>
           </nav>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

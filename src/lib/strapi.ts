@@ -104,18 +104,23 @@ function appendPopulate(params: URLSearchParams, fields: string[]) {
     }
   }
 
-  // Plain fields use indexed notation
-  let i = 0;
-  for (const f of topLevelOnly) {
-    params.set(`populate[${i}]`, f);
-    i++;
-  }
-
-  // Relations with sub-fields use object notation
-  for (const [relation, subs] of nested) {
-    subs.forEach((sub, j) => {
-      params.set(`populate[${relation}][populate][${j}]`, sub);
-    });
+  if (nested.size === 0) {
+    // No nested relations — safe to use indexed notation
+    let i = 0;
+    for (const f of topLevelOnly) {
+      params.set(`populate[${i}]`, f);
+      i++;
+    }
+  } else {
+    // Mix of plain and nested — use object notation for all
+    for (const f of topLevelOnly) {
+      params.set(`populate[${f}]`, "true");
+    }
+    for (const [relation, subs] of nested) {
+      subs.forEach((sub, j) => {
+        params.set(`populate[${relation}][populate][${j}]`, sub);
+      });
+    }
   }
 }
 
@@ -147,7 +152,7 @@ export async function getActivities(locale: Locale) {
 export async function getActivityBySlug(slug: string, locale: Locale) {
   const res = await fetchStrapi<Activity[]>("/activities", {
     locale,
-    populate: ["Image", "services", "seo"],
+    populate: ["Image", "services", "seo", "localizations"],
     filters: { Slug: { $eq: slug } },
   });
   return res.data[0] ?? null;
@@ -169,6 +174,7 @@ export async function getAllActivitySlugs() {
 export async function getServices(locale: Locale) {
   return fetchStrapi<Service[]>("/services", {
     locale,
+    populate: "Image",
     sort: "Service_Type:asc",
   });
 }
@@ -176,7 +182,7 @@ export async function getServices(locale: Locale) {
 export async function getServiceBySlug(slug: string, locale: Locale) {
   const res = await fetchStrapi<Service[]>("/services", {
     locale,
-    populate: ["activities", "activities.Image", "bundles", "seo"],
+    populate: ["Image", "activities", "activities.Image", "bundles", "seo", "localizations"],
     filters: { Slug: { $eq: slug } },
   });
   return res.data[0] ?? null;

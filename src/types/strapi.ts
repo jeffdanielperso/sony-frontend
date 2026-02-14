@@ -38,6 +38,11 @@ export interface MetaSocial {
   image?: StrapiImage | null;
 }
 
+export interface StrapiLocalization {
+  Slug: string;
+  locale: string;
+}
+
 export interface Activity {
   id: number;
   documentId: string;
@@ -48,6 +53,7 @@ export interface Activity {
   Image?: StrapiImage | null;
   services: Service[];
   seo?: Seo | null;
+  localizations?: StrapiLocalization[];
   locale: string;
   createdAt: string;
   updatedAt: string;
@@ -64,9 +70,11 @@ export interface Service {
   Base_Price: number;
   Duration_Minutes?: number | null;
   Location?: string | null;
+  Image?: StrapiImage | null;
   activities: Activity[];
   bundles: Bundle[];
   seo?: Seo | null;
+  localizations?: StrapiLocalization[];
   locale: string;
   createdAt: string;
   updatedAt: string;

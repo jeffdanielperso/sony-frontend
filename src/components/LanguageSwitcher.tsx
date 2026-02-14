@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/types/strapi";
+import { useAlternateUrl } from "@/components/AlternateUrlContext";
 
 interface LanguageSwitcherProps {
   lang: Locale;
@@ -11,8 +12,9 @@ interface LanguageSwitcherProps {
 
 export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
   const pathname = usePathname();
+  const { alternateUrl } = useAlternateUrl();
   const targetLocale = lang === "en" ? "fr" : "en";
-  const newPath = pathname.replace(`/${lang}`, `/${targetLocale}`);
+  const newPath = alternateUrl ?? pathname.replace(`/${lang}`, `/${targetLocale}`);
 
   return (
     <Link

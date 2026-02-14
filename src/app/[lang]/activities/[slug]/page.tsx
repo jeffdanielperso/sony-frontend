@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getActivityBySlug, getAllActivitySlugs, getStrapiMedia } from "@/lib/strapi";
+import { getAlternateSlug } from "@/lib/i18n-helpers";
+import { AlternateUrlSetter } from "@/components/AlternateUrlContext";
 import { ServiceCard } from "@/components/ServiceCard";
 import { MoonDivider } from "@/components/MoonDivider";
 
@@ -36,6 +38,11 @@ export async function generateMetadata({
 
   const imageUrl = getStrapiMedia(activity.Image?.url);
 
+  const targetLang = lang === "en" ? "fr" : "en";
+  const altSlug = getAlternateSlug(activity.localizations, lang);
+  const currentUrl = `/${lang}/activities/${slug}`;
+  const altUrl = altSlug ? `/${targetLang}/activities/${altSlug}` : null;
+
   return {
     title: activity.seo?.metaTitle ?? activity.Title,
     description: activity.seo?.metaDescription ?? activity.Description?.slice(0, 160),
@@ -44,6 +51,16 @@ export async function generateMetadata({
           images: [{ url: imageUrl, width: activity.Image!.width, height: activity.Image!.height }],
         }
       : undefined,
+    alternates: {
+      canonical: currentUrl,
+      languages: altUrl
+        ? {
+            en: lang === "en" ? currentUrl : altUrl,
+            fr: lang === "fr" ? currentUrl : altUrl,
+            "x-default": lang === "en" ? currentUrl : altUrl,
+          }
+        : undefined,
+    },
   };
 }
 
@@ -62,6 +79,10 @@ export default async function ActivityDetailPage({
     notFound();
   }
 
+  const targetLang = lang === "en" ? "fr" : "en";
+  const altSlug = getAlternateSlug(activity.localizations, lang);
+  const alternateUrl = altSlug ? `/${targetLang}/activities/${altSlug}` : null;
+
   const imageUrl = getStrapiMedia(
     activity.Image?.formats?.large?.url ?? activity.Image?.url,
   );
@@ -70,6 +91,7 @@ export default async function ActivityDetailPage({
 
   return (
     <article className="mx-auto max-w-4xl px-6 py-16">
+      <AlternateUrlSetter url={alternateUrl} />
       <Link
         href={`/${lang}/activities`}
         className="mb-8 inline-block text-sm font-medium text-accent transition-colors hover:text-accent-hover"

@@ -1,7 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getDictionary } from "@/i18n/config";
 import type { Locale } from "@/types/strapi";
+import { buildStaticAlternates } from "@/lib/i18n-helpers";
 import { MoonDivider } from "@/components/MoonDivider";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return {
+    alternates: buildStaticAlternates(lang, ""),
+  };
+}
 
 export default async function HomePage({
   params,

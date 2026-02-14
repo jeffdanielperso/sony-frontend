@@ -20,7 +20,9 @@ All routes live under `src/app/[lang]/` with `Locale = "en" | "fr"`. Middleware 
 
 Dictionaries are lazy-loaded JSON files in `src/i18n/dictionaries/`. Every page calls `getDictionary(lang)` to get translated strings. The `Locale` type is defined in `src/types/strapi.ts` and re-used everywhere.
 
-**Important:** Strapi uses `fr-FR` as its French locale code. The mapping from `"fr"` → `"fr-FR"` happens inside `fetchStrapi` in `src/lib/strapi.ts` — the rest of the app only uses `"en" | "fr"`.
+**Important:** Strapi is configured with `"en"` and `"fr"` locale codes — no `fr-FR` mapping is needed. The entire app uses `"en" | "fr"` consistently.
+
+**Cross-locale switching:** Detail pages populate the `localizations` relation from Strapi to get the alternate locale's slug. A React context (`AlternateUrlContext`) bridges this page-level data to the layout-level `LanguageSwitcher`. See `docs/i18n-cross-locale-switching.md` for full details.
 
 ### Strapi CMS Integration
 

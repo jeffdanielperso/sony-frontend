@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getActivities } from "@/lib/strapi";
+import { buildStaticAlternates } from "@/lib/i18n-helpers";
 import { ActivityCard } from "@/components/ActivityCard";
 
 export async function generateMetadata({
@@ -14,6 +15,7 @@ export async function generateMetadata({
   return {
     title: dict.activities.title,
     description: dict.activities.subtitle,
+    alternates: buildStaticAlternates(lang, "/activities"),
   };
 }
 

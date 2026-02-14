@@ -1,16 +1,9 @@
-# /docker-check
-
-Validate Docker and docker-compose configuration for Next.js best practices.
-
-## Model
-
-haiku
-
-## User-invocable
-
-true
-
-## Instructions
+---
+name: docker-check
+description: Validate Docker and docker-compose configuration for Next.js best practices.
+model: haiku
+user_invocable: true
+---
 
 When the user runs `/docker-check`:
 

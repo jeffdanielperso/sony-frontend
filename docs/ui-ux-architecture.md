@@ -309,23 +309,50 @@ The overlay mirrors the header brand (BrandLogo + "Sony Yoga") in the top-left f
 
 ## Language Switching
 
+### Cross-Locale Slug Resolution
+
+Detail pages (activities, services) have different slugs per locale (e.g., `/fr/services/programme-prenatal` vs `/en/services/pre-natal-series`). Simply swapping the `/fr/` prefix to `/en/` would produce a 404.
+
+**Solution:** Strapi's `localizations` relation is populated at fetch time. A React context bridges the page-level alternate URL to the layout-level switcher.
+
+```mermaid
+flowchart LR
+    A["Detail page fetches content<br/>with localizations"] --> B["getAlternateSlug() extracts<br/>target locale's slug"]
+    B --> C["AlternateUrlSetter pushes<br/>URL into React context"]
+    C --> D["LanguageSwitcher reads context<br/>→ links to correct slug"]
+    D --> E["On navigate away, context<br/>resets → prefix-swap fallback"]
+```
+
+**Key files:**
+- `src/components/AlternateUrlContext.tsx` — `AlternateUrlProvider`, `AlternateUrlSetter`, `useAlternateUrl`
+- `src/lib/i18n-helpers.ts` — `getAlternateSlug()`, `buildStaticAlternates()`
+
+For full implementation details, see `docs/i18n-cross-locale-switching.md`.
+
 ### Desktop: LanguageSwitcher
 
 **File:** `src/components/LanguageSwitcher.tsx`
 **Directive:** `"use client"`
 
-A single clickable `<Link>` showing `EN / FR` with the active locale highlighted in `text-foreground` and the inactive locale in `text-muted`. Clicking navigates to the same page with the locale segment swapped:
+A single clickable `<Link>` showing `EN / FR` with the active locale highlighted in `text-foreground` and the inactive locale in `text-muted`. The component reads `useAlternateUrl()` from context — when set (on detail pages), it links to the correct cross-locale URL. When absent (listing/static pages), it falls back to prefix-swap:
 
 ```
-/en/activities --> /fr/activities
-/fr/services   --> /en/services
+/en/activities         --> /fr/activities          (prefix swap)
+/fr/services/slug-fr   --> /en/services/slug-en    (from localizations)
 ```
 
 The `hrefLang` attribute is set on the link for SEO and accessibility.
 
 ### Mobile: Inline Language Link
 
-In the MobileNav, language switching is a separate `<Link>` (not the LanguageSwitcher component) that shows the `dict.language.switchTo` label as text. The path replacement logic is identical.
+In the MobileNav, language switching uses the same `useAlternateUrl()` context for cross-locale resolution, with prefix-swap as the fallback.
+
+### hreflang SEO Tags
+
+All pages emit `<link rel="alternate" hreflang="en/fr/x-default">` tags via Next.js `generateMetadata` `alternates.languages`:
+- **Detail pages** — URLs derived from `localizations` data
+- **Listing/static pages** — Simple prefix swap via `buildStaticAlternates()`
+- **x-default** — Always points to the English URL
 
 ### Middleware Locale Detection
 
@@ -494,6 +521,7 @@ graph TD
         ThemeSwitcher
         LanguageSwitcher
         MobileNav
+        AlternateUrlContext["AlternateUrlProvider / Setter"]
     end
 ```
 
@@ -598,7 +626,8 @@ ServiceCard uses per-type gradient variations to provide visual differentiation 
 | `src/components/MobileNav.tsx` | Fullscreen mobile nav via portal | Client |
 | `src/components/BrandLogo.tsx` | Dark/light logo swap | Server |
 | `src/components/ThemeSwitcher.tsx` | Dark mode toggle button | Client |
-| `src/components/LanguageSwitcher.tsx` | EN/FR language toggle link | Client |
+| `src/components/LanguageSwitcher.tsx` | EN/FR language toggle link (context-aware) | Client |
+| `src/components/AlternateUrlContext.tsx` | Cross-locale URL context for language switching | Client |
 | `src/components/MoonDivider.tsx` | Decorative lunar phase divider | Server |
 | `src/components/ActivityCard.tsx` | Activity card with image/intensity | Server |
 | `src/components/ServiceCard.tsx` | Service card with type gradients | Server |

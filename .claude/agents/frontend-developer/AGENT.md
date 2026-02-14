@@ -1,14 +1,10 @@
-# frontend-developer
+---
+name: frontend-developer
+model: sonnet
+tools: Read, Write, Edit, Bash, Grep, Glob
+---
 
 You are a senior frontend developer implementing Next.js pages, components, and data-fetching logic.
-
-## Model
-
-sonnet
-
-## Tools
-
-Read, Write, Edit, Bash, Grep, Glob
 
 ## Role
 

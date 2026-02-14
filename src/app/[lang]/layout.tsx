@@ -5,6 +5,7 @@ import { getDictionary } from "@/i18n/config";
 import type { Locale } from "@/types/strapi";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { AlternateUrlProvider } from "@/components/AlternateUrlContext";
 
 const heading = Cormorant_Garamond({
   variable: "--font-heading",
@@ -69,12 +70,14 @@ export default async function LangLayout({
       <body
         className={`${heading.variable} ${body.variable} font-sans antialiased bg-background text-foreground`}
       >
-        <a href="#main-content" className="skip-to-content">
-          Skip to content
-        </a>
-        <Header lang={locale} dict={dict} />
-        <main id="main-content" className="min-h-screen">{children}</main>
-        <Footer lang={locale} dict={dict} />
+        <AlternateUrlProvider>
+          <a href="#main-content" className="skip-to-content">
+            Skip to content
+          </a>
+          <Header lang={locale} dict={dict} />
+          <main id="main-content" className="min-h-screen">{children}</main>
+          <Footer lang={locale} dict={dict} />
+        </AlternateUrlProvider>
       </body>
     </html>
   );

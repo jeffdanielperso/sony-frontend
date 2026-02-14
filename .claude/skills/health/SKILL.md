@@ -1,16 +1,9 @@
-# /health
-
-Project health check — dependencies, env vars, TypeScript, lint, Strapi connectivity, i18n completeness.
-
-## Model
-
-haiku
-
-## User-invocable
-
-true
-
-## Instructions
+---
+name: health
+description: Project health check — dependencies, env vars, TypeScript, lint, Strapi connectivity, i18n completeness.
+model: haiku
+user_invocable: true
+---
 
 When the user runs `/health`:
 

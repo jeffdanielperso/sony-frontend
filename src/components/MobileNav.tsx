@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import type { Locale } from "@/types/strapi";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { BrandLogo } from "@/components/BrandLogo";
+import { useAlternateUrl } from "@/components/AlternateUrlContext";
 
 interface MobileNavProps {
   lang: Locale;
@@ -20,9 +21,10 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
+  const { alternateUrl } = useAlternateUrl();
 
   const targetLocale = lang === "en" ? "fr" : "en";
-  const langPath = pathname.replace(`/${lang}`, `/${targetLocale}`);
+  const langPath = alternateUrl ?? pathname.replace(`/${lang}`, `/${targetLocale}`);
 
   useEffect(() => {
     if (open) {

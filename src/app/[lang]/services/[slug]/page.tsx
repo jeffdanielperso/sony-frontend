@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
-import { getServiceBySlug, getAllServiceSlugs } from "@/lib/strapi";
+import { getServiceBySlug, getAllServiceSlugs, getStrapiMedia } from "@/lib/strapi";
+import { getAlternateSlug } from "@/lib/i18n-helpers";
+import { AlternateUrlSetter } from "@/components/AlternateUrlContext";
 import { BundleCard } from "@/components/BundleCard";
 import { MoonDivider } from "@/components/MoonDivider";
 
@@ -33,9 +36,33 @@ export async function generateMetadata({
     return { title: "Not Found" };
   }
 
+  const imageUrl = getStrapiMedia(
+    service.seo?.metaImage?.url ?? service.Image?.url,
+  );
+
+  const targetLang = lang === "en" ? "fr" : "en";
+  const altSlug = getAlternateSlug(service.localizations, lang);
+  const currentUrl = `/${lang}/services/${slug}`;
+  const altUrl = altSlug ? `/${targetLang}/services/${altSlug}` : null;
+
   return {
     title: service.seo?.metaTitle ?? service.Title,
     description: service.seo?.metaDescription ?? service.Description?.slice(0, 160),
+    openGraph: imageUrl
+      ? {
+          images: [{ url: imageUrl }],
+        }
+      : undefined,
+    alternates: {
+      canonical: currentUrl,
+      languages: altUrl
+        ? {
+            en: lang === "en" ? currentUrl : altUrl,
+            fr: lang === "fr" ? currentUrl : altUrl,
+            "x-default": lang === "en" ? currentUrl : altUrl,
+          }
+        : undefined,
+    },
   };
 }
 
@@ -54,8 +81,17 @@ export default async function ServiceDetailPage({
     notFound();
   }
 
+  const targetLang = lang === "en" ? "fr" : "en";
+  const altSlug = getAlternateSlug(service.localizations, lang);
+  const alternateUrl = altSlug ? `/${targetLang}/services/${altSlug}` : null;
+
+  const heroImage = getStrapiMedia(
+    service.Image?.formats?.large?.url ?? service.Image?.url,
+  );
+
   return (
     <article className="mx-auto max-w-4xl px-6 py-16">
+      <AlternateUrlSetter url={alternateUrl} />
       <Link
         href={`/${lang}/services`}
         className="mb-8 inline-block text-sm font-medium text-accent transition-colors hover:text-accent-hover"
@@ -63,11 +99,24 @@ export default async function ServiceDetailPage({
         &larr; {dict.services.backToServices}
       </Link>
 
-      <div
-        className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
-        role="img"
-        aria-label={service.Title}
-      />
+      {heroImage ? (
+        <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl">
+          <Image
+            src={heroImage}
+            alt={service.Image?.alternativeText ?? service.Title}
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 896px) 100vw, 896px"
+          />
+        </div>
+      ) : (
+        <div
+          className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/15 via-accent-soft to-background"
+          role="img"
+          aria-label={service.Title}
+        />
+      )}
 
       <div className="flex flex-wrap items-center gap-4">
         <h1 className="font-heading text-3xl font-light tracking-tight sm:text-4xl text-foreground">

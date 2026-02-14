@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getSocialLinks, getStrapiMedia } from "@/lib/strapi";
+import { buildStaticAlternates } from "@/lib/i18n-helpers";
 import { BrandLogo } from "@/components/BrandLogo";
 
 export async function generateMetadata({
@@ -15,6 +16,7 @@ export async function generateMetadata({
   return {
     title: dict.links.title,
     description: dict.links.subtitle,
+    alternates: buildStaticAlternates(lang, "/links"),
   };
 }
 

@@ -24,9 +24,9 @@ export function Footer({ lang, dict }: FooterProps) {
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid gap-8 sm:grid-cols-3">
           {/* Brand */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-4">
             <BrandLogo size={48} />
-            <div>
+            <div className="flex flex-col items-center sm:gap-1 sm:items-start">
               <div className="font-heading text-lg font-light tracking-[0.3em] uppercase text-foreground">
                 Sony Yoga
               </div>

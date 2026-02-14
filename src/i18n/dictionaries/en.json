@@ -1,0 +1,35 @@
+{
+  "site": {
+    "title": "Sony Yoga",
+    "description": "Luxury yoga experiences for mind, body, and soul"
+  },
+  "nav": {
+    "home": "Home",
+    "offers": "Offers",
+    "links": "Links"
+  },
+  "home": {
+    "hero": "Find Your Balance",
+    "subtitle": "Luxury yoga experiences crafted for your well-being",
+    "cta": "Explore Offers"
+  },
+  "offers": {
+    "title": "Our Offers",
+    "subtitle": "Discover our curated yoga experiences",
+    "viewDetails": "View Details",
+    "price": "Price",
+    "noOffers": "No offers available at the moment.",
+    "backToOffers": "Back to Offers"
+  },
+  "links": {
+    "title": "Connect With Us",
+    "subtitle": "Follow us on social media"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "language": {
+    "switchTo": "Français",
+    "current": "English"
+  }
+}

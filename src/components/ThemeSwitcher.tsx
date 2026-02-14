@@ -6,7 +6,11 @@ export function ThemeSwitcher() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"));
+    const stored = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const dark = stored === "dark" || (!stored && prefersDark);
+    document.documentElement.classList.toggle("dark", dark);
+    setIsDark(dark);
   }, []);
 
   function toggle() {

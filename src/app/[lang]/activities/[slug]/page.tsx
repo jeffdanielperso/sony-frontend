@@ -1,0 +1,136 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Locale } from "@/types/strapi";
+import { getDictionary } from "@/i18n/config";
+import { getActivityBySlug, getAllActivitySlugs, getStrapiMedia } from "@/lib/strapi";
+import { ServiceCard } from "@/components/ServiceCard";
+
+export async function generateStaticParams() {
+  const slugs = await getAllActivitySlugs();
+  const params: { lang: string; slug: string }[] = [];
+
+  for (const slug of slugs.en) {
+    params.push({ lang: "en", slug });
+  }
+  for (const slug of slugs.fr) {
+    params.push({ lang: "fr", slug });
+  }
+
+  return params;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale; slug: string }>;
+}): Promise<Metadata> {
+  const { lang, slug } = await params;
+  const activity = await getActivityBySlug(slug, lang);
+
+  if (!activity) {
+    return { title: "Not Found" };
+  }
+
+  const imageUrl = getStrapiMedia(activity.Image?.url);
+
+  return {
+    title: activity.seo?.metaTitle ?? activity.Title,
+    description: activity.seo?.metaDescription ?? activity.Description?.slice(0, 160),
+    openGraph: imageUrl
+      ? {
+          images: [{ url: imageUrl, width: activity.Image!.width, height: activity.Image!.height }],
+        }
+      : undefined,
+  };
+}
+
+export default async function ActivityDetailPage({
+  params,
+}: {
+  params: Promise<{ lang: Locale; slug: string }>;
+}) {
+  const { lang, slug } = await params;
+  const [dict, activity] = await Promise.all([
+    getDictionary(lang),
+    getActivityBySlug(slug, lang),
+  ]);
+
+  if (!activity) {
+    notFound();
+  }
+
+  const imageUrl = getStrapiMedia(
+    activity.Image?.formats?.large?.url ?? activity.Image?.url,
+  );
+
+  const intensity = activity.Intensity_Level ?? 0;
+
+  return (
+    <article className="mx-auto max-w-4xl px-6 py-16">
+      <Link
+        href={`/${lang}/activities`}
+        className="mb-8 inline-block text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+      >
+        &larr; {dict.activities.backToActivities}
+      </Link>
+
+      {imageUrl ? (
+        <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl">
+          <Image
+            src={imageUrl}
+            alt={activity.Image?.alternativeText ?? activity.Title}
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 896px) 100vw, 896px"
+          />
+        </div>
+      ) : (
+        <div className="mb-8 aspect-[16/9] rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5" />
+      )}
+
+      <div className="flex flex-wrap items-center gap-4">
+        <h1 className="text-3xl font-light tracking-tight sm:text-4xl text-foreground">
+          {activity.Title}
+        </h1>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted">{dict.activities.intensity}</span>
+          <div className="flex gap-1" aria-label={`${dict.activities.intensity} ${intensity} / 5`}>
+            {Array.from({ length: 5 }, (_, i) => (
+              <span
+                key={i}
+                className={`inline-block h-2.5 w-2.5 rounded-full ${
+                  i < intensity ? "bg-accent" : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="prose prose-neutral mt-8 max-w-none dark:prose-invert text-muted leading-relaxed whitespace-pre-wrap">
+        {activity.Description}
+      </div>
+
+      {activity.services?.length > 0 && (
+        <section className="mt-16">
+          <h2 className="mb-6 text-2xl font-light tracking-tight text-foreground">
+            {dict.activities.tryThisStyle}
+          </h2>
+          <div className="grid gap-8 sm:grid-cols-2">
+            {activity.services.map((service) => (
+              <ServiceCard
+                key={service.documentId}
+                service={service}
+                lang={lang}
+                viewDetailsLabel={dict.services.viewDetails}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </article>
+  );
+}

@@ -5,21 +5,37 @@
   },
   "nav": {
     "home": "Home",
-    "offers": "Offers",
+    "activities": "Activities",
+    "services": "Services",
     "links": "Links"
   },
   "home": {
     "hero": "Find Your Balance",
     "subtitle": "Luxury yoga experiences crafted for your well-being",
-    "cta": "Explore Offers"
+    "ctaActivities": "Explore Our Styles",
+    "ctaServices": "Book a Session"
   },
-  "offers": {
-    "title": "Our Offers",
-    "subtitle": "Discover our curated yoga experiences",
+  "activities": {
+    "title": "Our Activities",
+    "subtitle": "Discover our yoga styles and find the one that suits you",
+    "viewDetails": "Learn More",
+    "noActivities": "No activities available at the moment.",
+    "backToActivities": "Back to Activities",
+    "tryThisStyle": "Try This Style",
+    "intensity": "Intensity"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Choose a session format that works for you",
     "viewDetails": "View Details",
+    "noServices": "No services available at the moment.",
+    "backToServices": "Back to Services",
+    "availableStyles": "Available in These Styles",
+    "saveWithBundle": "Save with a Bundle",
+    "duration": "Duration",
+    "location": "Location",
     "price": "Price",
-    "noOffers": "No offers available at the moment.",
-    "backToOffers": "Back to Offers"
+    "sessions": "sessions"
   },
   "links": {
     "title": "Connect With Us",

@@ -5,21 +5,37 @@
   },
   "nav": {
     "home": "Accueil",
-    "offers": "Offres",
+    "activities": "Activités",
+    "services": "Services",
     "links": "Liens"
   },
   "home": {
     "hero": "Trouvez Votre Équilibre",
     "subtitle": "Des expériences de yoga de luxe conçues pour votre bien-être",
-    "cta": "Découvrir les Offres"
+    "ctaActivities": "Découvrir Nos Styles",
+    "ctaServices": "Réserver une Séance"
   },
-  "offers": {
-    "title": "Nos Offres",
-    "subtitle": "Découvrez nos expériences de yoga sélectionnées",
+  "activities": {
+    "title": "Nos Activités",
+    "subtitle": "Découvrez nos styles de yoga et trouvez celui qui vous convient",
+    "viewDetails": "En Savoir Plus",
+    "noActivities": "Aucune activité disponible pour le moment.",
+    "backToActivities": "Retour aux Activités",
+    "tryThisStyle": "Essayez Ce Style",
+    "intensity": "Intensité"
+  },
+  "services": {
+    "title": "Nos Services",
+    "subtitle": "Choisissez un format de séance qui vous convient",
     "viewDetails": "Voir les Détails",
+    "noServices": "Aucun service disponible pour le moment.",
+    "backToServices": "Retour aux Services",
+    "availableStyles": "Disponible dans Ces Styles",
+    "saveWithBundle": "Économisez avec un Forfait",
+    "duration": "Durée",
+    "location": "Lieu",
     "price": "Prix",
-    "noOffers": "Aucune offre disponible pour le moment.",
-    "backToOffers": "Retour aux Offres"
+    "sessions": "séances"
   },
   "links": {
     "title": "Restons Connectés",

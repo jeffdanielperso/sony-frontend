@@ -18,12 +18,20 @@ export default async function HomePage({
       <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
         {dict.home.subtitle}
       </p>
-      <Link
-        href={`/${lang}/offers`}
-        className="mt-10 inline-block rounded-full bg-accent px-8 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-accent-hover"
-      >
-        {dict.home.cta}
-      </Link>
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <Link
+          href={`/${lang}/activities`}
+          className="inline-block rounded-full bg-accent px-8 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-accent-hover"
+        >
+          {dict.home.ctaActivities}
+        </Link>
+        <Link
+          href={`/${lang}/services`}
+          className="inline-block rounded-full border border-accent px-8 py-3 text-sm font-medium tracking-wide text-accent transition-colors hover:bg-accent hover:text-white"
+        >
+          {dict.home.ctaServices}
+        </Link>
+      </div>
     </section>
   );
 }

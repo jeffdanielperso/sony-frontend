@@ -5,7 +5,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 interface HeaderProps {
   lang: Locale;
   dict: {
-    nav: { home: string; offers: string; links: string };
+    nav: { home: string; activities: string; services: string; links: string };
     language: { switchTo: string };
   };
 }
@@ -26,10 +26,16 @@ export function Header({ lang, dict }: HeaderProps) {
 
         <div className="flex items-center gap-8">
           <Link
-            href={`/${lang}/offers`}
+            href={`/${lang}/activities`}
             className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-foreground"
           >
-            {dict.nav.offers}
+            {dict.nav.activities}
+          </Link>
+          <Link
+            href={`/${lang}/services`}
+            className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-foreground"
+          >
+            {dict.nav.services}
           </Link>
           <Link
             href={`/${lang}/links`}

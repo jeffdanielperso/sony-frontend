@@ -1,4 +1,4 @@
-import type { StrapiResponse, Offer, SocialLink, Locale } from "@/types/strapi";
+import type { StrapiResponse, Activity, Service, SocialLink, Locale } from "@/types/strapi";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
@@ -18,14 +18,15 @@ async function fetchStrapi<T>(
   const url = new URL(`/api${path}`, STRAPI_URL);
 
   if (options.locale) {
-    url.searchParams.set("locale", options.locale);
+    const strapiLocale = options.locale === "fr" ? "fr-FR" : options.locale;
+    url.searchParams.set("locale", strapiLocale);
   }
 
   if (options.populate) {
-    const pop = Array.isArray(options.populate)
-      ? options.populate.join(",")
-      : options.populate;
-    url.searchParams.set("populate", pop);
+    const pops = Array.isArray(options.populate)
+      ? options.populate
+      : [options.populate];
+    appendPopulate(url.searchParams, pops);
   }
 
   if (options.sort) {
@@ -65,10 +66,58 @@ async function fetchStrapi<T>(
   });
 
   if (!res.ok) {
+    const body = await res.text();
+    console.error(`Strapi ${res.status} ${res.statusText} — ${url.toString()}\n${body}`);
     throw new Error(`Strapi error: ${res.status} ${res.statusText}`);
   }
 
   return res.json();
+}
+
+/**
+ * Converts a list like ["Image", "services", "services.Image"]
+ * into Strapi 5 nested bracket params:
+ *   populate[0]=Image
+ *   populate[services][populate][0]=Image
+ *
+ * Relations with nested sub-fields use only the object form
+ * (no conflicting indexed entry).
+ */
+function appendPopulate(params: URLSearchParams, fields: string[]) {
+  const nested = new Map<string, string[]>();
+  const topLevelOnly: string[] = [];
+
+  for (const field of fields) {
+    const dotIndex = field.indexOf(".");
+    if (dotIndex === -1) {
+      // Could be a plain field OR a relation that also appears with sub-fields
+      if (!nested.has(field)) topLevelOnly.push(field);
+    } else {
+      const relation = field.slice(0, dotIndex);
+      const sub = field.slice(dotIndex + 1);
+      if (!nested.has(relation)) {
+        nested.set(relation, []);
+        // Remove from topLevelOnly if already added
+        const idx = topLevelOnly.indexOf(relation);
+        if (idx !== -1) topLevelOnly.splice(idx, 1);
+      }
+      nested.get(relation)!.push(sub);
+    }
+  }
+
+  // Plain fields use indexed notation
+  let i = 0;
+  for (const f of topLevelOnly) {
+    params.set(`populate[${i}]`, f);
+    i++;
+  }
+
+  // Relations with sub-fields use object notation
+  for (const [relation, subs] of nested) {
+    subs.forEach((sub, j) => {
+      params.set(`populate[${relation}][populate][${j}]`, sub);
+    });
+  }
 }
 
 function appendFilters(
@@ -86,33 +135,62 @@ function appendFilters(
   }
 }
 
-// --- Offer queries ---
+// --- Activity queries ---
 
-export async function getOffers(locale: Locale) {
-  return fetchStrapi<Offer[]>("/offers", {
+export async function getActivities(locale: Locale) {
+  return fetchStrapi<Activity[]>("/activities", {
     locale,
     populate: "Image",
     sort: "createdAt:desc",
   });
 }
 
-export async function getOfferBySlug(slug: string, locale: Locale) {
-  const res = await fetchStrapi<Offer[]>("/offers", {
+export async function getActivityBySlug(slug: string, locale: Locale) {
+  const res = await fetchStrapi<Activity[]>("/activities", {
     locale,
-    populate: "Image",
+    populate: ["Image", "services", "seo"],
     filters: { Slug: { $eq: slug } },
   });
   return res.data[0] ?? null;
 }
 
-export async function getAllOfferSlugs() {
+export async function getAllActivitySlugs() {
   const [en, fr] = await Promise.all([
-    fetchStrapi<Offer[]>("/offers", { locale: "en", pagination: { pageSize: 100 } }),
-    fetchStrapi<Offer[]>("/offers", { locale: "fr", pagination: { pageSize: 100 } }),
+    fetchStrapi<Activity[]>("/activities", { locale: "en", pagination: { pageSize: 100 } }),
+    fetchStrapi<Activity[]>("/activities", { locale: "fr", pagination: { pageSize: 100 } }),
   ]);
   return {
-    en: en.data.map((o) => o.Slug),
-    fr: fr.data.map((o) => o.Slug),
+    en: en.data.map((a) => a.Slug),
+    fr: fr.data.map((a) => a.Slug),
+  };
+}
+
+// --- Service queries ---
+
+export async function getServices(locale: Locale) {
+  return fetchStrapi<Service[]>("/services", {
+    locale,
+    sort: "Service_Type:asc",
+  });
+}
+
+export async function getServiceBySlug(slug: string, locale: Locale) {
+  const res = await fetchStrapi<Service[]>("/services", {
+    locale,
+    populate: ["activities", "activities.Image", "bundles", "seo"],
+    filters: { Slug: { $eq: slug } },
+  });
+  return res.data[0] ?? null;
+}
+
+export async function getAllServiceSlugs() {
+  const [en, fr] = await Promise.all([
+    fetchStrapi<Service[]>("/services", { locale: "en", pagination: { pageSize: 100 } }),
+    fetchStrapi<Service[]>("/services", { locale: "fr", pagination: { pageSize: 100 } }),
+  ]);
+  return {
+    en: en.data.map((s) => s.Slug),
+    fr: fr.data.map((s) => s.Slug),
   };
 }
 

@@ -18,8 +18,7 @@ async function fetchStrapi<T>(
   const url = new URL(`/api${path}`, STRAPI_URL);
 
   if (options.locale) {
-    const strapiLocale = options.locale === "fr" ? "fr-FR" : options.locale;
-    url.searchParams.set("locale", strapiLocale);
+    url.searchParams.set("locale", options.locale);
   }
 
   if (options.populate) {

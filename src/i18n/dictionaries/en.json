@@ -40,7 +40,8 @@
   },
   "links": {
     "title": "Connect With Me",
-    "subtitle": "Follow me on social media"
+    "subtitle": "Follow me on social media",
+    "noLinks": "No links available at the moment."
   },
   "footer": {
     "rights": "All rights reserved.",
@@ -48,6 +49,16 @@
     "navTitle": "Navigation",
     "activitiesTitle": "Our Practices",
     "socialTitle": "Connect"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Return Home"
+  },
+  "error": {
+    "title": "Something Went Wrong",
+    "message": "We encountered an unexpected error. Please try again.",
+    "retry": "Try Again"
   },
   "language": {
     "switchTo": "Français",

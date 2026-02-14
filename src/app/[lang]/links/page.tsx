@@ -69,7 +69,7 @@ export default async function LinksPage({
         </div>
 
         {links.length === 0 && (
-          <p className="text-muted">No links available.</p>
+          <p className="text-muted">{dict.links.noLinks}</p>
         )}
       </div>
     </section>

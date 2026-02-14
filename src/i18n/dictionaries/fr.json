@@ -40,7 +40,8 @@
   },
   "links": {
     "title": "Restons Connectés",
-    "subtitle": "Suivez-moi sur les réseaux sociaux"
+    "subtitle": "Suivez-moi sur les réseaux sociaux",
+    "noLinks": "Aucun lien disponible pour le moment."
   },
   "footer": {
     "rights": "Tous droits réservés.",
@@ -48,6 +49,16 @@
     "navTitle": "Navigation",
     "activitiesTitle": "Nos pratiques",
     "socialTitle": "Nous suivre"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "message": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "backHome": "Retour à l'accueil"
+  },
+  "error": {
+    "title": "Une erreur est survenue",
+    "message": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
+    "retry": "Réessayer"
   },
   "language": {
     "switchTo": "English",

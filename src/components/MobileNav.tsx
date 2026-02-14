@@ -13,7 +13,7 @@ interface MobileNavProps {
   lang: Locale;
   dict: {
     nav: { home: string; activities: string; services: string; links: string; openMenu: string; closeMenu: string };
-    language: { switchTo: string; current: string };
+    language: { switchTo: string };
   };
 }
 

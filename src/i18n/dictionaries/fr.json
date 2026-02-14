@@ -12,10 +12,6 @@
     "closeMenu": "Fermer le menu"
   },
   "home": {
-    "hero": "Trouvez Votre Équilibre",
-    "subtitle": "Des expériences de yoga de luxe conçues pour votre bien-être",
-    "ctaActivities": "Découvrir Nos Styles",
-    "ctaServices": "Réserver une Séance",
     "featuredActivities": {
       "title": "Découvrez Nos Styles de Yoga",
       "subtitle": "Trouvez la pratique qui vous parle",
@@ -60,7 +56,6 @@
     "rights": "Tous droits réservés.",
     "tagline": "Corps, esprit, âme",
     "navTitle": "Navigation",
-    "activitiesTitle": "Nos pratiques",
     "socialTitle": "Nous suivre"
   },
   "notFound": {
@@ -74,7 +69,6 @@
     "retry": "Réessayer"
   },
   "language": {
-    "switchTo": "English",
-    "current": "Français"
+    "switchTo": "English"
   }
 }

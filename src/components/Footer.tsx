@@ -6,7 +6,7 @@ interface FooterProps {
   lang: Locale;
   dict: {
     nav: { activities: string; services: string; links: string };
-    footer: { rights: string; tagline: string; navTitle: string; activitiesTitle: string; socialTitle: string };
+    footer: { rights: string; tagline: string; navTitle: string; socialTitle: string };
   };
 }
 

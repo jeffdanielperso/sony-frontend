@@ -12,10 +12,6 @@
     "closeMenu": "Close menu"
   },
   "home": {
-    "hero": "Find Your Balance",
-    "subtitle": "Luxury yoga experiences crafted for your well-being",
-    "ctaActivities": "Explore Our Styles",
-    "ctaServices": "Book a Session",
     "featuredActivities": {
       "title": "Explore Our Yoga Styles",
       "subtitle": "Find the practice that speaks to you",
@@ -60,7 +56,6 @@
     "rights": "All rights reserved.",
     "tagline": "Mind, body, soul",
     "navTitle": "Navigation",
-    "activitiesTitle": "Our Practices",
     "socialTitle": "Connect"
   },
   "notFound": {
@@ -74,7 +69,6 @@
     "retry": "Try Again"
   },
   "language": {
-    "switchTo": "Français",
-    "current": "English"
+    "switchTo": "Français"
   }
 }

@@ -3,6 +3,7 @@ import type { Locale } from "@/types/strapi";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { MobileNav } from "@/components/MobileNav";
+import { BrandLogo } from "@/components/BrandLogo";
 
 interface HeaderProps {
   lang: Locale;
@@ -21,8 +22,9 @@ export function Header({ lang, dict }: HeaderProps) {
       >
         <Link
           href={`/${lang}`}
-          className="font-heading text-xl font-light tracking-[0.3em] uppercase text-foreground"
+          className="flex items-center gap-3 font-heading text-xl font-medium tracking-[0.3em] uppercase text-foreground"
         >
+          <BrandLogo size={36} />
           Sony Yoga
         </Link>
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/types/strapi";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { BrandLogo } from "@/components/BrandLogo";
 
 interface MobileNavProps {
   lang: Locale;
@@ -73,7 +74,8 @@ export function MobileNav({ lang, dict }: MobileNavProps) {
           aria-label="Navigation menu"
         >
           <div className="flex items-center justify-between px-6 py-4">
-            <span className="font-heading text-xl font-light tracking-[0.3em] uppercase text-foreground">
+            <span className="flex items-center gap-3 font-heading text-xl font-light tracking-[0.3em] uppercase text-foreground">
+              <BrandLogo size={36} />
               Sony Yoga
             </span>
             <button

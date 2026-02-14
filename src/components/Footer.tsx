@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Locale } from "@/types/strapi";
+import { BrandLogo } from "@/components/BrandLogo";
 
 interface FooterProps {
   lang: Locale;
@@ -23,11 +24,14 @@ export function Footer({ lang, dict }: FooterProps) {
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid gap-8 sm:grid-cols-3">
           {/* Brand */}
-          <div>
-            <div className="font-heading text-lg font-light tracking-[0.3em] uppercase text-foreground">
-              Sony Yoga
+          <div className="flex items-center gap-4">
+            <BrandLogo size={48} />
+            <div>
+              <div className="font-heading text-lg font-light tracking-[0.3em] uppercase text-foreground">
+                Sony Yoga
+              </div>
+              <p className="mt-1 text-sm text-muted">{dict.footer.tagline}</p>
             </div>
-            <p className="mt-2 text-sm text-muted">{dict.footer.tagline}</p>
           </div>
 
           {/* Navigation */}

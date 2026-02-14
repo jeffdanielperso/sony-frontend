@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Locale } from "@/types/strapi";
 import { getDictionary } from "@/i18n/config";
 import { getSocialLinks, getStrapiMedia } from "@/lib/strapi";
+import { BrandLogo } from "@/components/BrandLogo";
 
 export async function generateMetadata({
   params,
@@ -29,8 +30,11 @@ export default async function LinksPage({
   return (
     <section className="flex min-h-[80vh] flex-col items-center justify-center px-6 py-16">
       <div className="w-full max-w-md text-center">
-        <div className="font-heading text-3xl font-light tracking-widest uppercase text-foreground">
-          Sony Yoga
+        <div className="flex flex-col items-center gap-3">
+          <BrandLogo size={56} />
+          <div className="font-heading text-3xl font-light tracking-widest uppercase text-foreground">
+            Sony Yoga
+          </div>
         </div>
         <p className="mb-10 text-sm text-muted">{dict.links.subtitle}</p>
 

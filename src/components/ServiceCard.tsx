@@ -34,7 +34,7 @@ export function ServiceCard({ service, lang, viewDetailsLabel }: ServiceCardProp
 
   return (
     <article
-      className="card-enter group overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 hover:border-accent/30 hover:-translate-y-1"
+      className="card-enter group relative overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 hover:border-accent/30 hover:-translate-y-1 cursor-pointer has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background"
       role="listitem"
     >
       {imageUrl ? (
@@ -71,10 +71,11 @@ export function ServiceCard({ service, lang, viewDetailsLabel }: ServiceCardProp
         </div>
         <Link
           href={`/${lang}/services/${service.Slug}`}
-          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors hover:text-accent-hover after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          aria-label={`${viewDetailsLabel}: ${service.Title}`}
         >
-          {viewDetailsLabel}
-          <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+          <span aria-hidden="true">{viewDetailsLabel}</span>
+          <span className="inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
         </Link>
       </div>
     </article>
